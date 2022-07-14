@@ -1,5 +1,5 @@
 import appDataSource from "../../data-source";
-import { IUpdateCompanie } from "../../interfaces/companie.interface";
+import { IUpdateCompanie } from "../../interfaces/companies";
 import { Companie } from "../../entities/companies.entity";
 
 const updateCompanieService = async ({ id, name }: IUpdateCompanie) => {

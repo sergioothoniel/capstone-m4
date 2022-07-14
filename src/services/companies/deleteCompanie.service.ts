@@ -1,5 +1,5 @@
 import appDataSource from "../../data-source";
-import { IDeleteCompanie } from "../../interfaces/companie.interface";
+import { IDeleteCompanie } from "../../interfaces/companies";
 import { Companie } from "../../entities/companies.entity";
 
 const deleteCompanieService = async ({ id }: IDeleteCompanie) => {

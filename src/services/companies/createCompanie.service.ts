@@ -1,5 +1,5 @@
 import appDataSource from "../../data-source";
-import { ICreateCompanie } from "../../interfaces/companie.interface";
+import { ICreateCompanie } from "../../interfaces/companies";
 import { Companie } from "../../entities/companies.entity";
 
 const createCompanieService = async ({ name, cnpj }: ICreateCompanie) => {
