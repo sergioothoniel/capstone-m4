@@ -1,4 +1,4 @@
-import { appDataSource } from "../../data-source";
+import appDataSource from "../../data-source";
 import { IUpdateCompanie } from "../../interfaces/companie.interface";
 import { Companie } from "../../entities/companies.entity";
 
