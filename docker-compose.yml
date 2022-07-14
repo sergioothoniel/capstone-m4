@@ -1,41 +1,41 @@
 version: '3.9'
 
 services:
-api:
-  container_name: stoke_api
-  build: .
-  ports:
-    - 3000:3000
-  environment:
-    - DB_HOST=db
-    - DB_PASSWORD=1234
-    - DB=stoke_db
-    - DB_USER=mateu
-    - SECRET_KEY=77888393
-  depends_on:
+  api:
+    container_name: capstone_m4
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - DB_HOST=db
+      - DB_PASSWORD=20081989
+      - DB=stoke_db
+      - DB_USER=sergi
+      - SECRET_KEY=77888393
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+
   db:
-    condition: service_healthy
-  volumes:
-    - .:/app
+    container_name: db
+    image: postgres:14
+    ports:
+      - 5431:5432
+    environment:
+      - POSTGRES_USER=sergi
+      - POSTGRES_PASSWORD=20081989
+      - POSTGRES_DB=stoke_db
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U sergi -d stoke_db']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
 
-db:
-  container_name: db
-  image: postgres:14
-  ports:
-    - 5431:5432
-  environment:
-    - POSTGRES_USER=mateu
-    - POSTGRES_PASSWORD=1234
-    - POSTGRES_DB=stoke_db
-  healthcheck:
-  test: ['CMD-SHELL', 'pg_isready -U mateu -d stoke_db']
-  interval: 10s
-  timeout: 5s
-  retries: 5
-  start_period: 5s
-
-  volumes:
-    - postgres_stoke_api:/var/lib/postgresql/data
+    volumes:
+      - postgres_stoke_api:/var/lib/postgresql/data
 
 volumes:
   postgres_stoke_api:
