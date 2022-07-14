@@ -8,10 +8,12 @@ services:
       - 3000:3000
     environment:
       - PORT=3000
+
       - DB_USER=process.env.POSTGRES_USER
       - DB_PASSWORD=process.env.POSTGRES_PASSWORD
       - DB_HOST=POSTGRES_DB
       - DB=POSTGRES_DB
+
       - DB_PORT=5432
     depends_on:
       db:
@@ -27,7 +29,7 @@ services:
     env_file:
       - .env
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]   
       interval: 10s
       timeout: 5s
       retries: 5
