@@ -1,7 +1,6 @@
 import appDataSource from "../../data-source";
 import { ICreateCompanie } from "../../interfaces/companie.interface";
 import { Companie } from "../../entities/companies.entity";
-//import * as bcrypt from "bcryptjs";
 
 const createCompanieService = async ({ name, cnpj }: ICreateCompanie) => {
   const companieRepository = appDataSource.getRepository(Companie);
