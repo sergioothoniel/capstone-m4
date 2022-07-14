@@ -32,9 +32,6 @@ export class Inventory {
   @ManyToOne((type) => Product, (product) => product.inventory)
   product: Product;
 
-  @Column("float")
-  total: number;
-
   constructor() {
     if (!this.id) {
       this.id = uuid();
