@@ -8,10 +8,12 @@ services:
       - 3000:3000
     environment:
       - PORT=3000
-      - DB_USER=anthoni
-      - DB_PASSWORD=1234
-      - DB_HOST=stoke_db
-      - DB=stoke_db
+
+      - DB_USER=process.env.POSTGRES_USER
+      - DB_PASSWORD=process.env.POSTGRES_PASSWORD
+      - DB_HOST=POSTGRES_DB
+      - DB=POSTGRES_DB
+
       - DB_PORT=5432
     depends_on:
       db:
@@ -24,12 +26,10 @@ services:
     image: postgres:14
     ports:
       - 5431:5432
-    environment:
-      - POSTGRES_USER=anthoni
-      - POSTGRES_PASSWORD=1234
-      - POSTGRES_DB=stoke_db
+    env_file:
+      - .env
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U anthoni -d stoke_db"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]   
       interval: 10s
       timeout: 5s
       retries: 5
