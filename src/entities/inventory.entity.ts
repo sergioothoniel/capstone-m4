@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-import { Product } from "./product.entity.ts";
+import { Products } from "./products.entity";
 
 @Entity()
 export class Inventory {
@@ -29,8 +29,8 @@ export class Inventory {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne((type) => Product, (product) => product.inventory)
-  product: Product;
+  @ManyToOne((type) => Products, (product) => product.id)
+  product: Products;
 
   @Column("float")
   total: number;
