@@ -24,7 +24,7 @@ const createUserService = async (data: IUserRequest): Promise<IUserResponse> => 
        password: hashedPassword,
        active: true,
        permission: permissionSearched,
-       company: companySearched   
+       company: companySearched
 
     });
 
