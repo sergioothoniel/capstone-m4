@@ -5,7 +5,7 @@ import appDataSource from "./data-source";
   await appDataSource.initialize().catch((error) => {
     console.log("Error during initialization dataSource", error);
   });
-  app.listen(3000, () => {
+  app.listen(process.env.PORT || 3000, () => {
     console.log("Server runing");
   });
 })();
