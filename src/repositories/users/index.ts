@@ -4,13 +4,13 @@ import { IUserRequest, IUserResponse } from "../../interfaces/users"
 
 export const usersRepository = appDataSource.getRepository(User)
 
-export const listUsersRepository = async (): Promise<IUserResponse[]> =>{
+export const listUsersRepository = async () =>{
     const users = await usersRepository.find()
     return users
 }
 
 
-export const createUsersRepository = (newUser: IUserRequest): IUserResponse =>{
+export const createUsersRepository = (newUser: IUserRequest) =>{
     const user = usersRepository.create(newUser)
     return user
 }

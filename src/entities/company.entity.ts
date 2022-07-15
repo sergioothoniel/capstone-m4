@@ -13,11 +13,6 @@ export class Company {
   @Column({ unique: true })
   cnpj: string;
 
-  @OneToMany((type) => User, (user) => user.company, {
-    eager: true,
-  })
-  users: User[];
-
   constructor() {
     if (!this.id) {
       this.id = uuid();

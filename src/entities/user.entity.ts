@@ -35,18 +35,16 @@ export class User {
   @Column()
   active: boolean;
 
-  @ManyToOne((type) => Permission, (permission) => permission.users)
+  @ManyToOne((type) => Permission)
   permission: Permission;
-  @ManyToOne((type) => Company, (company) => company.users)
+
+  @ManyToOne((type) => Company)
   company: Company;
 
-  @OneToMany((type) => Product, (product) => product.user, {
-    eager: true,
-  })
+  @OneToMany((type) => Product, (product) => product.user)
   products: Product[];
-  @OneToMany((type) => Order, (order) => order.user, {
-    eager: true,
-  })
+
+  @OneToMany((type) => Order, (order) => order.user)
   orders: Order[];
 
   @CreateDateColumn()
