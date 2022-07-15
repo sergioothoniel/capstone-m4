@@ -1,9 +1,9 @@
 import { IUserResponse } from "../../interfaces/users";
-import { usersRepository } from "../../repositories/users";
+import { listUsersRepository} from "../../repositories/users";
 
 const listUserService = async (): Promise<IUserResponse[]> => {
 
-    const users = await usersRepository.find();
+    const users = await listUsersRepository()
 
     return users;
 

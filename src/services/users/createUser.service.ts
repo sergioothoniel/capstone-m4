@@ -1,21 +1,27 @@
 import { IUserRequest, IUserResponse } from "../../interfaces/users";
 import { hash } from "bcryptjs";
 import { usersRepository } from "../../repositories/users";
-import appDataSource from "../../data-source";
-import { Permission } from "../../entities/permission.entity";
-import { Company } from "../../entities/company.entity";
+import { listPermissionsRepository } from "../../repositories/permissions";
+import { listCompaniesRepository } from "../../repositories/companies";
+import { AppError } from "../../errors/appError";
 
 const createUserService = async (data: IUserRequest): Promise<IUserResponse> => {
 
     const hashedPassword = await hash(data.password, 10);
-
-    const permissioRepository = appDataSource.getRepository(Permission)
-    const permissionsList = await permissioRepository.find()
+    
+    const permissionsList = await listPermissionsRepository()
     const permissionSearched = permissionsList.find(permission => permission.id === data.permission_id)
 
-    const companyRepository = appDataSource.getRepository(Company)
-    const companiesList = await companyRepository.find()
+    if(!permissionSearched){
+        throw new AppError("Permission is incorrect")
+    }
+    
+    const companiesList = await listCompaniesRepository()
     const companySearched = companiesList.find(company => company.id === data.company_id)
+
+    if(!companySearched){
+        throw new AppError("Permission is incorrect")
+    }
 
     const user = usersRepository.create({
        name: data.name,
