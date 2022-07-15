@@ -9,10 +9,7 @@ app.use(express.json());
 
 app.use("/users", userRouter); 
 app.use("/login", sessionRouter); 
-// app.use("products", productsRoutes);
-// app.use("companies", companiesRoutes);
-// app.use("orders", ordersRoutes);
-// app.use("categories", categoriesRoutes);
+
 
 app.use(appErrorMiddleware);
 
