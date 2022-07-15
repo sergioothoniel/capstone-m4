@@ -24,7 +24,7 @@ services:
     container_name: stoke_db
     image: postgres:14
     ports:
-      - 5431:5432
+      - DB_PORT=process.env.DB_PORT
     env_file:
       - .env
     healthcheck:
