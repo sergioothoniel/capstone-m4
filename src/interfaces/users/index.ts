@@ -5,9 +5,7 @@ export interface IUserRequest {
     cpf: string;
     password: string;
     permission_id: string;
-    company_id: string;
-    active: boolean;
-
+    company_id: string;  
 }
 
 export interface IUserResponse {
@@ -16,8 +14,8 @@ export interface IUserResponse {
     name: string;
     email: string;
     cpf: string;
-    permission_id: string;
-    company_id: string;
+    permission: object;
+    company: object;
     active: boolean;
     created_at: Date;
     updated_at: Date;
