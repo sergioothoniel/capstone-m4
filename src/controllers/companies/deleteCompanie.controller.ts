@@ -1,21 +1,12 @@
 import { Request, Response } from "express";
-import deleteCompanieService from "../../services/companies/deleteCompanie.service";
+import deleteCompanieService from "../../services/companies/deleteCompany.service";
 
 const deleteUserController = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    const user = await deleteCompanieService({ id });
+  const user = await deleteCompanieService({ id });
 
-    return res.status(200).json({ message: "Companie deleted" });
-  } catch (err) {
-    if (err instanceof Error) {
-      return res.status(401).send({
-        error: err.name,
-        message: err.message,
-      });
-    }
-  }
+  return res.status(200).json({ message: "Companie deleted" });
 };
 
 export default deleteUserController;
