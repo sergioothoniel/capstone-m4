@@ -1,16 +1,19 @@
 import { Entity, Column, PrimaryColumn, OneToMany } from "typeorm";
-import { v4 as uuid } from "uuid";
 import { User } from "./user.entity";
+import { v4 as uuid } from "uuid";
 
-@Entity("permissions")
-export class Permission {
+@Entity()
+export class Company {
   @PrimaryColumn("uuid")
   readonly id: string;
 
-  @Column({ unique: true })
+  @Column()
   name: string;
 
-  @OneToMany((type) => User, (user) => user.permission, {
+  @Column({ unique: true })
+  cnpj: string;
+
+  @OneToMany((type) => User, (user) => user.company, {
     eager: true,
   })
   users: User[];

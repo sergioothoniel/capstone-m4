@@ -1,19 +1,19 @@
 import { Entity, Column, PrimaryColumn, OneToMany } from "typeorm";
 import { v4 as uuid } from "uuid";
-import { User } from "./user.entity";
+import { Product } from "./product.entity";
 
-@Entity("permissions")
-export class Permission {
+@Entity()
+export class Category {
   @PrimaryColumn("uuid")
   readonly id: string;
 
-  @Column({ unique: true })
+  @Column()
   name: string;
 
-  @OneToMany((type) => User, (user) => user.permission, {
+  @OneToMany((type) => Product, (product) => product.category, {
     eager: true,
   })
-  users: User[];
+  products: Product[];
 
   constructor() {
     if (!this.id) {

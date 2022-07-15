@@ -1,24 +1,44 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+} from "typeorm";
+import { v4 as uuid } from "uuid";
+import { Product } from "./product.entity";
+import { User } from "./user.entity";
 
-@Entity('orders')
-export class Orders {
+@Entity("orders")
+export class Order {
+  @PrimaryColumn("uuid")
+  readonly id: string;
 
-    @PrimaryGeneratedColumn('uuid')
-    id: string
+  @Column()
+  quantity: number;
 
-    @Column()
-    product_id: string
+  @Column()
+  type: string;
 
-    @Column()
-    user_id: string
+  @Column()
+  active: boolean;
 
-    @Column()
-    quantity: number
+  @CreateDateColumn()
+  created_at: Date;
 
-    @Column()
-    type: string
+  @UpdateDateColumn()
+  updated_at: Date;
 
-    @Column()
-    active: boolean
-    
+  @ManyToOne((type) => Product, (product) => product.orders)
+  product: Product;
+
+  @ManyToOne((type) => User, (user) => user.orders)
+  user: User;
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuid();
+    }
+  }
 }
