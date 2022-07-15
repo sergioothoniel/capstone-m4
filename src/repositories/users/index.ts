@@ -28,3 +28,13 @@ export const deleteUsersRepository = async (id: string) =>{
 
     await usersRepository.delete(userToDelete!.id)
 }
+
+export const updateUsersRepository = async (id: string, data: IUserRequest) =>{
+
+    await usersRepository.update({id: id}, data)
+
+    const users = await listUsersRepository()
+    const userUpdated = users.find(user => user.id === id)
+
+    return {...userUpdated, password: undefined}
+}
