@@ -8,10 +8,10 @@ import {
 
 const updateCompanieService = async ({ id, data }: IUpdateCompany) => {
   const companies = await listCompaniesRepository();
-
+  
   const companyAlreadyExists = companies.find((user: any) => user.id === id);
-
-  if (companyAlreadyExists) {
+  
+  if (!companyAlreadyExists) {
     throw new AppError("Company not found!", 404);
   }
 

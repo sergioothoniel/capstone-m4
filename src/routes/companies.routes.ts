@@ -4,12 +4,13 @@ const routes = Router();
 
 import createCompanieController from "../controllers/companies/createCompanie.controller";
 import listCompaniesController from "../controllers/companies/listCompanies.controller";
-import updateCompanieService from "../services/companies/updateCompany.service";
-import deleteCompanieService from "../services/companies/deleteCompany.service";
+import updateCompanyController from "../controllers/companies/updateCompanie.controller";
 
-routes.post("/companies", createCompanieController);
-routes.get("/companies",  listCompaniesController);
-routes.patch("/companies/:id", updateCompanieService);
-routes.delete("/companies/:id", deleteCompanieService);
+import deleteCompanyController from "../controllers/companies/deleteCompanie.controller";
+
+routes.post("", createCompanieController);
+routes.get("", listCompaniesController);
+routes.patch("/:id", updateCompanyController);
+routes.delete("/:id", deleteCompanyController);
 
 export default routes;
