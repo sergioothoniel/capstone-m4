@@ -1,5 +1,6 @@
-import { appDataSource } from "../../data-source";
-import { Companie } from "../../entities/company.entity";
+import appDataSource from "../../data-source";
+import { Companie } from "../../entities/companies.entity";
+
 
 const listCompaniesService = async () => {
   const companieRepository = appDataSource.getRepository(Companie);
