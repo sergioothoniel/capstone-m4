@@ -7,20 +7,20 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-import { Products } from "./products.entity";
+import { Product } from "./product.entity";
 
 @Entity()
 export class Inventory {
   @PrimaryColumn("uuid")
   readonly id: string;
 
-  @Column()
+  @Column({ nullable: true })
   quantiy: number;
 
-  @Column()
+  @Column({ nullable: true })
   unitary_value: number;
 
-  @Column()
+  @Column({ nullable: true })
   total_value: number;
 
   @CreateDateColumn()
@@ -29,11 +29,8 @@ export class Inventory {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne((type) => Products, (product) => product.id)
-  product: Products;
-
-  @Column("float")
-  total: number;
+  @ManyToOne((type) => Product, (product) => product.inventories)
+  product: Product;
 
   constructor() {
     if (!this.id) {
