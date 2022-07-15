@@ -30,10 +30,10 @@ export class Order {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne((type) => Product, (product) => product.orders)
+  @ManyToOne((type) => Product, {eager: true})
   product: Product;
 
-  @ManyToOne((type) => User, (user) => user.orders)
+  @ManyToOne((type) => User, {eager: true})
   user: User;
 
   constructor() {

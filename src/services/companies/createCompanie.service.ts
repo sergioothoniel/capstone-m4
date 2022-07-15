@@ -1,11 +1,10 @@
-//import * as bcrypt from "bcryptjs";
 import appDataSource from "../../data-source";
 import { ICreateCompanie } from "../../interfaces/companies";
-import { Companie } from "../../entities/companies.entity";
+import { Company } from "../../entities/company.entity";
 
 
 const createCompanieService = async ({ name, cnpj }: ICreateCompanie) => {
-  const companieRepository = appDataSource.getRepository(Companie);
+  const companieRepository = appDataSource.getRepository(Company);
 
   const companies = await companieRepository.find();
 
@@ -17,7 +16,7 @@ const createCompanieService = async ({ name, cnpj }: ICreateCompanie) => {
     throw new Error("Companie already exists!");
   }
 
-  const newCompanie = new Companie();
+  const newCompanie = new Company();
 
   (newCompanie.name = name),
     (newCompanie.cnpj = cnpj),

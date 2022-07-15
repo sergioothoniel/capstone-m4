@@ -1,10 +1,10 @@
 import appDataSource from "../../data-source";
 import { IUpdateCompanie } from "../../interfaces/companies";
-import { Companie } from "../../entities/companies.entity";
+import { Company } from "../../entities/company.entity";
 
 
 const updateCompanieService = async ({ id, name }: IUpdateCompanie) => {
-  const companieRepository = appDataSource.getRepository(Companie);
+  const companieRepository = appDataSource.getRepository(Company);
 
   const companies = await companieRepository.find();
 

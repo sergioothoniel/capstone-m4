@@ -42,7 +42,7 @@ const userSessionService = async ({ email, password }:IUserLogin):Promise<string
     const token = jwt.sign({
 
         id: user.id,
-        permission_id: user.permission_id
+        permission_id: user.permission
 
     }, process.env.SECRET_KEY as string, {
 

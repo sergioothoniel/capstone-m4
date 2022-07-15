@@ -1,16 +1,16 @@
 import appDataSource from "../../data-source";
-import { Companie } from "../../entities/companies.entity";
+import { Company } from "../../entities/company.entity";
 import { ICompanie, ICreateCompanie } from "../../interfaces/companies";
 
-export const companiesRepository = appDataSource.getRepository(Companie)
+export const companiesRepository = appDataSource.getRepository(Company)
 
-export const listCompaniesRepository = async (): Promise<ICompanie[]> =>{
+export const listCompaniesRepository = async () =>{
     const companies = await companiesRepository.find()
     return companies
 }
 
 
-export const createCompaniesRepository = (newCompanie: ICreateCompanie): ICreateCompanie =>{
+export const createCompaniesRepository = (newCompanie: ICreateCompanie) =>{
     const company = companiesRepository.create(newCompanie)
     return company
 }

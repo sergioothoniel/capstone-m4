@@ -29,7 +29,7 @@ export class Inventory {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne((type) => Product, (product) => product.inventories)
+  @ManyToOne((type) => Product, {eager: true})
   product: Product;
 
   constructor() {
