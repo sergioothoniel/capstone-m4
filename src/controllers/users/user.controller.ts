@@ -3,9 +3,7 @@ import { Request, Response } from "express"
 import createUserService from "../../services/users/createUser.service";
 import listUserService from "../../services/users/listUser.service";
 
-export const createUserController = async (req: Request, res: Response) => {
-
-    try {
+export const createUserController = async (req: Request, res: Response) => {    
 
         const data = req.body;
     
@@ -16,11 +14,8 @@ export const createUserController = async (req: Request, res: Response) => {
             message: "User Created",
             newUser
 
-        });
-        
-    } catch (error) {
-        
-    }
+        });       
+    
 
 }
 
