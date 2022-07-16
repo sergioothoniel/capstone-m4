@@ -6,7 +6,7 @@ export interface IPermissionsRequest {
 
 export interface IPermissionsResponse {
 
-    id: string;
+    id: number;
     name: string;
 
 }
