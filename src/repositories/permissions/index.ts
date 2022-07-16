@@ -10,7 +10,7 @@ export const listPermissionsRepository = async (): Promise<IPermissionsResponse[
 }
 
 
-export const createUPermissionsRepository = (newPermission: IPermissionsRequest): IPermissionsResponse =>{
+export const createPermissionsRepository = (newPermission: IPermissionsRequest): IPermissionsResponse =>{
     const permission = permissiosRepository.create(newPermission)
     return permission
 }

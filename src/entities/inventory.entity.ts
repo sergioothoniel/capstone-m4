@@ -15,7 +15,7 @@ export class Inventory {
   readonly id: string;
 
   @Column({ nullable: true })
-  quantiy: number;
+  quantity: number;
 
   @Column({ nullable: true })
   unitary_value: number;

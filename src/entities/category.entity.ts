@@ -10,8 +10,8 @@ export class Category {
   @Column()
   name: string;
 
-  @OneToMany((type) => Product, (product) => product.category)
-  products: Product[];
+  // @OneToMany((type) => Product, (product) => product.category)
+  // products: Product[];
 
   constructor() {
     if (!this.id) {
