@@ -32,18 +32,18 @@ const createProductService = async (data: IProductsRequest) => {
     category.id === category_id;
   });
 
-  if (!findCategory) {
-    throw new AppError("category not found", 404);
-  }
+  // if (!findCategory) {
+  //   throw new AppError("category not found", 404);
+  // }
   const userRepository = appDataSource.getRepository(User);
 
   const users = await userRepository.find();
   const userId = users.find((user) => {
     user.id === user_id;
   });
-  if (!userId) {
-    throw new AppError("user not found", 404);
-  }
+  // if (!userId) {
+  //   throw new AppError("user not found", 404);
+  // }
 
   const newProduct = {
     id: uuid(),
