@@ -10,7 +10,7 @@ export const listPermissionsRepository = async (): Promise<IPermissionsResponse[
 }
 
 
-export const createUPermissionsRepository = (newPermission: IPermissionsRequest): IPermissionsResponse =>{
+export const createPermissionsRepository = (newPermission: IPermissionsRequest): IPermissionsResponse =>{
     const permission = permissiosRepository.create(newPermission)
     return permission
 }
@@ -20,7 +20,7 @@ export const savePermissionRepository = async (newPermission: IPermissionsReques
     return permission
 }
 
-export const deletePermissionRepository = async (id: string) =>{
+export const deletePermissionRepository = async (id: number) =>{
 
     const permissions = await listPermissionsRepository()
 
@@ -29,7 +29,7 @@ export const deletePermissionRepository = async (id: string) =>{
     await permissiosRepository.delete(permissionToDelete!.id)
 }
 
-export const updatePermissionRepository = async (id: string, name: string)=>{
+export const updatePermissionRepository = async (id: number, name: string)=>{
 
     await permissiosRepository.update({id: id}, {name: name})
 

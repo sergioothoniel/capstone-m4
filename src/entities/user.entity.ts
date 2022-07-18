@@ -35,10 +35,10 @@ export class User {
   @Column()
   active: boolean;
 
-  @ManyToOne((type) => Permission)
+  @ManyToOne((type) => Permission, {eager: true})
   permission: Permission;
 
-  @ManyToOne((type) => Company)
+  @ManyToOne((type) => Company, {eager: true})
   company: Company;
 
   @OneToMany((type) => Product, (product) => product.user)
