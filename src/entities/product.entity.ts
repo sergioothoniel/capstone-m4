@@ -16,18 +16,14 @@ export class Product {
   @Column({ nullable: true })
   description: string;
 
-  @ManyToOne((type) => User, (user) => user.products)
+  @ManyToOne((type) => User, {eager: true})
   user: User;
-  @ManyToOne((type) => Category, (category) => category.products)
+  @ManyToOne((type) => Category, {eager: true})
   category: Category;
 
-  @OneToMany((type) => Inventory, (inventory) => inventory.product, {
-    eager: true,
-  })
+  @OneToMany((type) => Inventory, (inventory) => inventory.product)
   inventories: Inventory[];
-  @OneToMany((type) => Order, (order) => order.product, {
-    eager: true,
-  })
+  @OneToMany((type) => Order, (order) => order.product)
   orders: Order[];
 
   constructor() {

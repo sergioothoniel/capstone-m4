@@ -9,13 +9,13 @@ import {
 import { v4 as uuid } from "uuid";
 import { Product } from "./product.entity";
 
-@Entity()
+@Entity("inventory")
 export class Inventory {
   @PrimaryColumn("uuid")
   readonly id: string;
 
   @Column({ nullable: true })
-  quantiy: number;
+  quantity: number;
 
   @Column({ nullable: true })
   unitary_value: number;
@@ -29,7 +29,7 @@ export class Inventory {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne((type) => Product, (product) => product.inventories)
+  @ManyToOne((type) => Product, {eager: true})
   product: Product;
 
   constructor() {
