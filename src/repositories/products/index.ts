@@ -19,7 +19,7 @@ export const listProductRepository = async () => {
     return newProduct;
   });
 
-  return products;
+  return usersFormated;
 };
 
 export const createUProductsRepository = (newProduct: any) => {
@@ -29,7 +29,11 @@ export const createUProductsRepository = (newProduct: any) => {
 
 export const saveProductRepository = async (newProduct: any) => {
   const product = await productsRepository.save(newProduct);
-  return product;
+
+  const poductsList = await listProductRepository()
+  const productSaved = poductsList.find(value => value.id === product.id)
+
+  return productSaved;
 };
 
 export const deleteProductRepository = async (id: string) => {
