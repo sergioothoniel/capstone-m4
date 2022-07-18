@@ -6,6 +6,7 @@ const createProductController = async (
   response: Response
 ) => {
   const userId = request.userData.id
+
   const product = request.body;
   
   const newProduct = await createProductService(product, userId);

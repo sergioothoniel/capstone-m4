@@ -36,11 +36,14 @@ const createProductService = async (data: IProductsRequest, id: string) => {
   // if (!findCategory) {
   //   throw new AppError("category not found", 404);
   // }
-
+  
   const users = await listUsersRepository();
   const userId = users.find((user) => {
     return user.id === id;
   });
+  if (!userId) {
+    throw new AppError("User not found", 404);
+  }
 
   const newProduct = {
     name: name,

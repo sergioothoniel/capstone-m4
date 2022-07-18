@@ -12,6 +12,7 @@ export const productsRepository = appDataSource.getRepository(Product);
 export const listProductRepository = async () => {
   const products = await productsRepository.find();
   const usersFormated = products.map((value):IProductFormated => {
+
     const user: string = value.user.id;
 
     const newProduct = { ...value, user: user };
