@@ -7,15 +7,16 @@ import listUserController from "../controllers/users/listUser.controller";
 import listUserFormatedController from '../controllers/users/listUsersFormated.controller';
 import updateUserController from '../controllers/users/updateUser.controller';
 import ensureAuthMiddleware from '../middlewares/ensureAuth.middleware';
+import ensurePermissionMiddleware from '../middlewares/ensurePermission.middleware';
 
 const userRouter = Router();
 
-userRouter.post("", ensureAuthMiddleware, createUserController);
+userRouter.post("", ensureAuthMiddleware, ensurePermissionMiddleware, createUserController);
 userRouter.get("", ensureAuthMiddleware, listUserFormatedController)
 userRouter.get("/listall", ensureAuthMiddleware, listUserController);
 userRouter.get("/me", ensureAuthMiddleware, listMyUserController)
-userRouter.get("/:id", ensureAuthMiddleware, listOneUserController)
-userRouter.patch("/:id", ensureAuthMiddleware, updateUserController)
-userRouter.delete("/:id", ensureAuthMiddleware, deleteUserController)
+userRouter.get("/:id", ensureAuthMiddleware, ensurePermissionMiddleware, listOneUserController)
+userRouter.patch("/:id", ensureAuthMiddleware, ensurePermissionMiddleware, updateUserController)
+userRouter.delete("/:id", ensureAuthMiddleware, ensurePermissionMiddleware, deleteUserController)
 
 export default userRouter;
