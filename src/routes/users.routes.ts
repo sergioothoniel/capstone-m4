@@ -13,8 +13,8 @@ const userRouter = Router();
 userRouter.post("", ensureAuthMiddleware, createUserController);
 userRouter.get("", ensureAuthMiddleware, listUserFormatedController)
 userRouter.get("/listall", ensureAuthMiddleware, listUserController);
-userRouter.get("/:id", ensureAuthMiddleware, listOneUserController)
 userRouter.get("/me", ensureAuthMiddleware, listMyUserController)
+userRouter.get("/:id", ensureAuthMiddleware, listOneUserController)
 userRouter.patch("/:id", ensureAuthMiddleware, updateUserController)
 userRouter.delete("/:id", ensureAuthMiddleware, deleteUserController)
 
