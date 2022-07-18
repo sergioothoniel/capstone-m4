@@ -12,14 +12,15 @@ const createUserService = async ({name, email, cpf, password, company_id, permis
     const userAlreadyRegistred = users.find(user => user.cpf === cpf || user.email === email) 
 
     if(userAlreadyRegistred){
-        throw new AppError("User already registred")   }    
+        throw new AppError("User already registred")
+       }    
 
     const permissionsList = await listPermissionsRepository()
-    // const permissionSearched = permissionsList.find(permission => permission.id === permission_id)
+    const permissionSearched = permissionsList.find(permission => permission.id === permission_id)
 
-    // if(!permissionSearched){
-    //     throw new AppError("Permission is incorrect")
-    // }
+    if(!permissionSearched){
+        throw new AppError("Permission is incorrect")
+    }
 
     const companiesList = await listCompaniesRepository()
     const companySearched = companiesList.find(company => company.id === company_id)
