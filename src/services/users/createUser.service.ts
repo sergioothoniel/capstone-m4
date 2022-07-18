@@ -38,7 +38,7 @@ const createUserService = async ({name, email, cpf, password, company_id, permis
        password: hashedPassword,
        active: true,
        permission: permissionSearched,
-       company: companySearched   
+       company: companySearched
 
     });
 
