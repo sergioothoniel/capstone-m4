@@ -26,10 +26,8 @@ const ensureAuthMiddleware = (req: Request, res: Response, next: NextFunction) =
             permission: decoded.permission
         } 
         
-        console.log(decoded)
-
-        next()
-    })
+        next()        
+    })   
 
 }
 

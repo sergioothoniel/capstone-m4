@@ -2,7 +2,6 @@ import { AppError } from "../../errors/appError"
 import { listUsersRepository } from "../../repositories/users"
 
 const listOneUserService = async (id: string) =>{
-    console.log(id)
     const users = await listUsersRepository()
     const userToShow = users.find(user => user.id === id)
 
