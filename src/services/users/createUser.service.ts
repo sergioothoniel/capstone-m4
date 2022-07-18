@@ -1,32 +1,40 @@
-import { IUserRequest, IUserResponse } from "../../interfaces/users";
+import { IUserRequest } from "../../interfaces/users";
 import { hash } from "bcryptjs";
-import { usersRepository } from "../../repositories/users";
+import { createUsersRepository, listUsersRepository, saveUsersRepository, usersRepository } from "../../repositories/users";
 import { listPermissionsRepository } from "../../repositories/permissions";
 import { listCompaniesRepository } from "../../repositories/companies";
 import { AppError } from "../../errors/appError";
 
-const createUserService = async (data: IUserRequest): Promise<IUserResponse> => {
 
-    const hashedPassword = await hash(data.password, 10);
-    
+const createUserService = async ({name, email, cpf, password, company_id, permission_id}: IUserRequest) => {
+
+    const users = await listUsersRepository()
+    const userAlreadyRegistred = users.find(user => user.cpf === cpf || user.email === email) 
+
+    if(userAlreadyRegistred){
+        throw new AppError("User already registred")   }    
+
     const permissionsList = await listPermissionsRepository()
-    const permissionSearched = permissionsList.find(permission => permission.id === data.permission_id)
+    // const permissionSearched = permissionsList.find(permission => permission.id === permission_id)
 
-    if(!permissionSearched){
-        throw new AppError("Permission is incorrect")
-    }
-    
+    // if(!permissionSearched){
+    //     throw new AppError("Permission is incorrect")
+    // }
+
     const companiesList = await listCompaniesRepository()
-    const companySearched = companiesList.find(company => company.id === data.company_id)
+    const companySearched = companiesList.find(company => company.id === company_id)
+
 
     if(!companySearched){
-        throw new AppError("Permission is incorrect")
+        throw new AppError("Company not found")
     }
 
-    const user = usersRepository.create({
-       name: data.name,
-       cpf: data.cpf,
-       email: data.email,
+    const hashedPassword = await hash(password, 10);
+
+    const user = createUsersRepository({
+       name: name,
+       cpf: cpf,
+       email: email,
        password: hashedPassword,
        active: true,
        permission: permissionSearched,
@@ -34,10 +42,9 @@ const createUserService = async (data: IUserRequest): Promise<IUserResponse> => 
 
     });
 
-    await usersRepository.save(user);
+    const newUser = await saveUsersRepository(user);
 
-    return user;
-
+    return {...newUser, password: undefined};
 }
 
 export default createUserService;
