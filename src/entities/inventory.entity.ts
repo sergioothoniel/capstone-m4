@@ -9,7 +9,7 @@ import {
 import { v4 as uuid } from "uuid";
 import { Product } from "./product.entity";
 
-@Entity()
+@Entity("inventory")
 export class Inventory {
   @PrimaryColumn("uuid")
   readonly id: string;

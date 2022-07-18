@@ -1,29 +1,25 @@
 import appDataSource from "../../data-source";
 import { ICreateCompanie } from "../../interfaces/companies";
 import { Company } from "../../entities/company.entity";
+import { createCompaniesRepository, listCompaniesRepository, saveCompaniesRepository } from "../../repositories/companies";
 
 
 const createCompanieService = async ({ name, cnpj }: ICreateCompanie) => {
-  const companieRepository = appDataSource.getRepository(Company);
-
-  const companies = await companieRepository.find();
+  
+  const companies = await listCompaniesRepository()
 
   const companieAlreadyExists = companies.find(
-    (user: any) => user.cnpj === cnpj
+    (company: any) => company.cnpj === cnpj
   );
 
   if (companieAlreadyExists) {
     throw new Error("Companie already exists!");
   }
 
-  const newCompanie = new Company();
+ const company = createCompaniesRepository({name, cnpj})
+ const newCompany = await saveCompaniesRepository(company)
 
-  (newCompanie.name = name),
-    (newCompanie.cnpj = cnpj),
-    companieRepository.create(newCompanie);
-  await companieRepository.save(newCompanie);
-
-  return newCompanie;
+  return newCompany;
 };
 
 export default createCompanieService;
