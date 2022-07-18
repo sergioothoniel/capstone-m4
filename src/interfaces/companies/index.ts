@@ -1,19 +1,22 @@
-export interface ICompanie {
+export interface ICompany {
   id: string;
   name: string;
   cnpj: string;
 }
 
-export interface ICreateCompanie {
+export interface ICreateCompany {
   name: string;
   cnpj: string;
 }
 
-export interface IUpdateCompanie {
+export interface IUpdateCompany {
   id: string;
-  name: string;
+  data: {
+    name?: string;
+    cnpj?: string;
+  };
 }
 
-export interface IDeleteCompanie {
+export interface IDeleteCompany {
   id: string;
 }
