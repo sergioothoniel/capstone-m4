@@ -15,7 +15,7 @@ const deleteCompanyService = async ({ id }: IDeleteCompany) => {
     throw new AppError("Company not found", 404);
   }
 
-  await deleteCompaniesRepository({id});
+  await deleteCompaniesRepository(id);
 
   return true;
 };

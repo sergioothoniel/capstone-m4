@@ -3,7 +3,7 @@ import { IUpdateCompany } from "../../interfaces/companies";
 
 import {
   listCompaniesRepository,
-  updateCompanyRepository,
+  updateCompaiesRepository,
 } from "../../repositories/companies";
 
 const updateCompanieService = async ({ id, data }: IUpdateCompany) => {
@@ -15,7 +15,7 @@ const updateCompanieService = async ({ id, data }: IUpdateCompany) => {
     throw new AppError("Company not found!", 404);
   }
 
-  const updateCompany = await updateCompanyRepository({ id, data });
+  const updateCompany = await updateCompaiesRepository( id, data.name );
 
   return updateCompany;
 };

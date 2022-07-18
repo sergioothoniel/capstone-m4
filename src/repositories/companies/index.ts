@@ -1,21 +1,6 @@
 import appDataSource from "../../data-source";
 import { Company } from "../../entities/company.entity";
-<<<<<<< HEAD
-import {
-  ICompany,
-  ICreateCompany,
-  IDeleteCompany,
-  IUpdateCompany,
-} from "../../interfaces/companies";
-
-export const companiesRepository = appDataSource.getRepository(Company);
-
-export const listCompaniesRepository = async (): Promise<ICompany[]> => {
-  const companies = await companiesRepository.find();
-  return companies;
-};
-=======
-import { ICompanie, ICreateCompanie } from "../../interfaces/companies";
+import { ICreateCompany } from "../../interfaces/companies";
 
 export const companiesRepository = appDataSource.getRepository(Company)
 
@@ -23,53 +8,28 @@ export const listCompaniesRepository = async () =>{
     const companies = await companiesRepository.find()
     return companies
 }
->>>>>>> 76a2373889309f66e93d3592c2c73e7881a296ce
 
-export const createCompaniesRepository = (
-  { name, cnpj }: ICreateCompany
-): ICreateCompany => {
-  const company = companiesRepository.create({ name, cnpj });
-  return company;
-};
 
-<<<<<<< HEAD
-export const saveCompaniesRepository = async (
-  newCompanie: ICreateCompany
-): Promise<ICreateCompany> => {
-  const company = await companiesRepository.save(newCompanie);
-  return company;
-};
-=======
-export const createCompaniesRepository = (newCompanie: ICreateCompanie) =>{
+export const createCompaniesRepository = (newCompanie: ICreateCompany) =>{
     const company = companiesRepository.create(newCompanie)
     return company
 }
->>>>>>> 76a2373889309f66e93d3592c2c73e7881a296ce
 
-export const deleteCompaniesRepository = async ({ id }: IDeleteCompany) => {
-  const companies = await listCompaniesRepository();
+export const saveCompaniesRepository = async (newCompanie: ICreateCompany): Promise<ICreateCompany> =>{
+    const company = await companiesRepository.save(newCompanie)
+    return company
+}
 
-  const companyToDelete = companies.find((company) => company.id === id);
+export const deleteCompaniesRepository = async (id: string) =>{
 
-  await companiesRepository.delete(companyToDelete!.id);
-};
+    const companies = await listCompaniesRepository()
 
-export const updateCompanyRepository = async ({ id, data }: IUpdateCompany) => {
-  const companies = await listCompaniesRepository();
+    const companyToDelete = companies.find(company => company.id === id)
 
-  const companyToUpdate = companies.find((company) => company.id === id);
+    await companiesRepository.delete(companyToDelete!.id)
+}
 
-<<<<<<< HEAD
-  await companiesRepository.update(companyToUpdate!.id, data);
-
-  const companiesNewList = await listCompaniesRepository();
-
-  const companyUpdated = companiesNewList.find((company) => company.id === id);
-
-  return companyUpdated;
-};
-=======
-export const updateCompaiesRepository = async (id: string, name: string) =>{
+export const updateCompaiesRepository = async (id: string, name: any) =>{
 
     await companiesRepository.update({id: id}, {name: name})
 
@@ -78,5 +38,3 @@ export const updateCompaiesRepository = async (id: string, name: string) =>{
 
     return companyUpdated
 }
-
->>>>>>> 76a2373889309f66e93d3592c2c73e7881a296ce
