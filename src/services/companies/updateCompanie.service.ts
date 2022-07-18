@@ -1,20 +1,21 @@
-import appDataSource from "../../data-source";
 import { IUpdateCompanie } from "../../interfaces/companies";
-import { Company } from "../../entities/company.entity";
+import { listCompaniesRepository, updateCompaiesRepository } from "../../repositories/companies";
+import { AppError } from "../../errors/appError";
 
 
 const updateCompanieService = async ({ id, name }: IUpdateCompanie) => {
-  const companieRepository = appDataSource.getRepository(Company);
+ 
+  const companies = await listCompaniesRepository();
 
-  const companies = await companieRepository.find();
+  const companyToUpdate = companies.find((company) => company.id === id);
 
-  const companie = companies.find((user: any) => user.id === id);
+  if(!companyToUpdate){
+    throw new AppError("Company not found", 404)
+  }
 
-  await companieRepository.update(companie!.id, {
-    name: name,
-  });
+  const companyUpdated = await updateCompaiesRepository(id, name)
 
-  return true;
+  return companyUpdated
 };
 
 export default updateCompanieService;

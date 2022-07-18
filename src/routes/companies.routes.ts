@@ -1,15 +1,15 @@
 import { Router } from "express";
 
-const routes = Router();
+const companiesRoutes = Router();
 
 import createCompanieController from "../controllers/companies/createCompanie.controller";
 import listCompaniesController from "../controllers/companies/listCompanies.controller";
-import updateCompanieService from "../services/companies/updateCompanie.service";
-import deleteCompanieService from "../services/companies/deleteCompanie.service";
+import deleteCompanyController from "../controllers/companies/deleteCompanie.controller";
+import updateCompanyController from "../controllers/companies/updateCompanie.controller";
 
-routes.post("/companies", createCompanieController);
-routes.get("/companies",  listCompaniesController);
-routes.patch("/companies/:id", updateCompanieService);
-routes.delete("/companies/:id", deleteCompanieService);
+companiesRoutes.post("", createCompanieController);
+companiesRoutes.get("",  listCompaniesController);
+companiesRoutes.patch("/:id", updateCompanyController);
+companiesRoutes.delete("/:id", deleteCompanyController);
 
-export default routes;
+export default companiesRoutes;

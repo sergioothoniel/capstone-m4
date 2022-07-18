@@ -29,3 +29,13 @@ export const deleteCompaniesRepository = async (id: string) =>{
     await companiesRepository.delete(companyToDelete!.id)
 }
 
+export const updateCompaiesRepository = async (id: string, name: string) =>{
+
+    await companiesRepository.update({id: id}, {name: name})
+
+    const companies = await listCompaniesRepository()
+    const companyUpdated = companies.find(company => company.id === id)
+
+    return companyUpdated
+}
+
