@@ -3,12 +3,13 @@ import createPermissionController from "../controllers/permissions/createPermiss
 import deletePermissionController from "../controllers/permissions/deletePermission.controller";
 import listPermissionsController from "../controllers/permissions/listPermissions.controller";
 import updatePermissionController from "../controllers/permissions/updatePermission.controller";
+import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 
 const permissionsRoutes = Router()
 
-permissionsRoutes.post("", createPermissionController)
-permissionsRoutes.get("", listPermissionsController)
-permissionsRoutes.delete("/:id", deletePermissionController)
-permissionsRoutes.patch("/:id", updatePermissionController)
+permissionsRoutes.post("",ensureAuthMiddleware, createPermissionController)
+permissionsRoutes.get("",ensureAuthMiddleware, listPermissionsController)
+permissionsRoutes.delete("/:id",ensureAuthMiddleware, deletePermissionController)
+permissionsRoutes.patch("/:id",ensureAuthMiddleware, updatePermissionController)
 
 export default permissionsRoutes

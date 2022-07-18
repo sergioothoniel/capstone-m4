@@ -1,12 +1,13 @@
-import { IUserResponse } from "../../interfaces/users";
 import { listUsersRepository} from "../../repositories/users";
 
-const listUserService = async (): Promise<IUserResponse[]> => {
+const listUserService = async () => {
 
     const users = await listUsersRepository()
+    const usersWithoutPassword = users.map(user => {
+        return {...user, password: undefined}
+    })
 
-    return users;
-
+    return usersWithoutPassword;
 }
 
 export default listUserService;
