@@ -15,6 +15,7 @@ app.use("/permissions", permissionsRoutes);
 app.use("/companies", companiesRoutes)
 
 
+
 app.use(appErrorMiddleware);
 
 export default app;

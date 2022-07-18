@@ -5,6 +5,7 @@ import { listPermissionsRepository } from "../../repositories/permissions";
 import { listCompaniesRepository } from "../../repositories/companies";
 import { AppError } from "../../errors/appError";
 
+
 const createUserService = async ({name, email, cpf, password, company_id, permission_id}: IUserRequest) => {
 
     const users = await listUsersRepository()
@@ -12,16 +13,17 @@ const createUserService = async ({name, email, cpf, password, company_id, permis
 
     if(userAlreadyRegistred){
         throw new AppError("User already registred")   }    
-    
-    const permissionsList = await listPermissionsRepository()
-    const permissionSearched = permissionsList.find(permission => permission.id === permission_id)
 
-    if(!permissionSearched){
-        throw new AppError("Permission is incorrect")
-    }
-    
+    const permissionsList = await listPermissionsRepository()
+    // const permissionSearched = permissionsList.find(permission => permission.id === permission_id)
+
+    // if(!permissionSearched){
+    //     throw new AppError("Permission is incorrect")
+    // }
+
     const companiesList = await listCompaniesRepository()
     const companySearched = companiesList.find(company => company.id === company_id)
+
 
     if(!companySearched){
         throw new AppError("Company not found")
