@@ -11,9 +11,10 @@ import {
 } from "../../repositories/products";
 import { Category } from "../../entities/category.entity";
 import { User } from "../../entities/user.entity";
+import { listUsersRepository } from "../../repositories/users";
 
-const createProductService = async (data: IProductsRequest) => {
-  const { name, description, category_id, user_id } = data;
+const createProductService = async (data: IProductsRequest, id: string) => {
+  const { name, description, category_id } = data;
 
   const products = await listProductRepository();
 
@@ -35,26 +36,22 @@ const createProductService = async (data: IProductsRequest) => {
   // if (!findCategory) {
   //   throw new AppError("category not found", 404);
   // }
-  const userRepository = appDataSource.getRepository(User);
 
-  const users = await userRepository.find();
+  const users = await listUsersRepository();
   const userId = users.find((user) => {
-    user.id === user_id;
+    return user.id === id;
   });
-  // if (!userId) {
-  //   throw new AppError("user not found", 404);
-  // }
 
   const newProduct = {
-    id: uuid(),
     name: name,
     description: description,
     category: findCategory,
     user: userId,
   };
-  const productResponse = createUProductsRepository(newProduct);
-  await saveProductRepository(productResponse);
 
-  return productResponse;
+  const productResponse = createUProductsRepository(newProduct);
+  const x = await saveProductRepository(productResponse);
+
+  return x;
 };
 export default createProductService;
