@@ -24,13 +24,12 @@ const createProductService = async (data: IProductsRequest, id: string) => {
   );
 
   if (productAlreadyExists) {
-    throw new AppError("product already registered", 404);
+    throw new AppError("Product already registered", 404);
   }
 
   const categoryRepository = categoriesRepository;
 
   const categories = await categoryRepository.find();
-  console.log(categories);
   const findCategory = categories.find((category) => {
     return category.id === category_id;
   });
