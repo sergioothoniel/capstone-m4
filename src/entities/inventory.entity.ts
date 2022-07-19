@@ -20,7 +20,7 @@ export class Inventory {
   @Column({ nullable: true })
   unitary_value: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "float" })
   total_value: number;
 
   @CreateDateColumn()
@@ -29,7 +29,7 @@ export class Inventory {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne((type) => Product, {eager: true})
+  @ManyToOne((type) => Product, { eager: true })
   product: Product;
 
   constructor() {

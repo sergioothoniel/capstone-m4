@@ -1,41 +1,68 @@
-import appDataSource from "../../data-source"
-import { Inventory } from "../../entities/inventory.entity"
-import { Permission } from "../../entities/permission.entity"
-import { IInventoryRequest, IInventoryResponse, IInventoryUpdate } from "../../interfaces/inventory"
-import { IPermissionsRequest, IPermissionsResponse } from "../../interfaces/permissions"
+import appDataSource from "../../data-source";
+import { Inventory } from "../../entities/inventory.entity";
+import { Permission } from "../../entities/permission.entity";
+import {
+  IInventoryRequest,
+  IInventoryResponse,
+  IInventoryUpdate,
+  IInventoryUpdated,
+} from "../../interfaces/inventory";
+import {
+  IPermissionsRequest,
+  IPermissionsResponse,
+} from "../../interfaces/permissions";
 
-export const inventorysRepository = appDataSource.getRepository(Inventory)
+export const inventorysRepository = appDataSource.getRepository(Inventory);
 
-export const listInventoryRepository = async (): Promise<IInventoryResponse[]> =>{
-    const inventory = await inventorysRepository.find()
-    return inventory
-}
+export const listInventoryRepository = async (): Promise<
+  IInventoryResponse[]
+> => {
+  const inventory = await inventorysRepository.find();
+  return inventory;
+};
 
-export const createInventoryRepository = (newProducts: IInventoryRequest): IInventoryResponse =>{
-    const product = inventorysRepository.create(newProducts)
-    return product
-}
+export const createInventoryRepository = (newProducts: IInventoryResponse) => {
+  const product = inventorysRepository.create(newProducts);
+  return product;
+};
 
-export const saveInventoryRepository = async (newProduct: IInventoryRequest): Promise<IInventoryResponse> =>{
-    const product = await inventorysRepository.save(newProduct)
-    return product
-}
+export const saveInventoryRepository = async (
+  newProduct: IInventoryResponse
+): Promise<IInventoryResponse> => {
+  const product = await inventorysRepository.save(newProduct);
 
-export const deleteInventoryRepository = async (id: string) =>{
+  return product;
+};
 
-    const inventory = await listInventoryRepository()
+export const deleteInventoryRepository = async (id: string) => {
+  const inventory = await listInventoryRepository();
 
-    const productToDelete = inventory.find(product => product.id === id)
+  const productToDelete = inventory.find((product) => product.id === id);
 
-    await inventorysRepository.delete(productToDelete!.id)
-}
+  await inventorysRepository.delete(productToDelete!.id);
+};
 
-export const updateInventoryRepository = async (id: string, data: IInventoryUpdate)=>{
+export const updateInventoryRepository = async ({
+  id,
+  data,
+}: IInventoryUpdate) => {
+  const inventory = await listInventoryRepository();
+  const inventoryUpdated = inventory.find((product) => product.id === id);
+  
+  const newData = data.unitary_value
+  ? data.quantity / data.unitary_value
+  : data.quantity / inventoryUpdated!.unitary_value;
+  
+  const newInventoryUpdated: IInventoryUpdated = {
+    quantity: data.quantity,
+    unitary_value: data.unitary_value,
+    total_value: Number(newData.toFixed(2)),
+  };
+  
+  await inventorysRepository.update({ id: id }, newInventoryUpdated);
+  
+  const listUpdated = await listInventoryRepository();
+  const productUpdated = listUpdated.find((product) => product.id === id);
 
-    await inventorysRepository.update({id: id}, data)
-
-    const invnetory = await listInventoryRepository()
-    const productUpdated = invnetory.find(product => product.id === id)
-
-    return productUpdated
-}
+  return productUpdated;
+};
