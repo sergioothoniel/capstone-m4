@@ -21,6 +21,14 @@ export interface IInventoryUpdate {
     unitary_value?: number;
   };
 }
+export interface IInventoryUpdated {
+  
+ 
+    quantity: number;
+    unitary_value?: number;
+    total_value: number;
+ 
+}
 export interface IInventoryList {
   id: string;
 }

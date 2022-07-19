@@ -17,6 +17,6 @@ app.use("/login", loginRoute)
 app.use("/permissions", permissionsRoutes);
 app.use("/companies", companiesRoutes)
 app.use("/inventory", inventoryRoutes)
-app.use(appErrorMiddleware);
+// app.use(appErrorMiddleware);
 
 export default app;

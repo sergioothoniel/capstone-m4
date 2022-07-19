@@ -5,6 +5,7 @@ import {
   IInventoryRequest,
   IInventoryResponse,
   IInventoryUpdate,
+  IInventoryUpdated,
 } from "../../interfaces/inventory";
 import {
   IPermissionsRequest,
@@ -45,10 +46,23 @@ export const updateInventoryRepository = async ({
   id,
   data,
 }: IInventoryUpdate) => {
-  await inventorysRepository.update({ id: id }, data);
-
   const inventory = await listInventoryRepository();
-  const productUpdated = inventory.find((product) => product.id === id);
+  const inventoryUpdated = inventory.find((product) => product.id === id);
+  
+  const newData = data.unitary_value
+  ? data.quantity / data.unitary_value
+  : data.quantity / inventoryUpdated!.unitary_value;
+  
+  const newInventoryUpdated: IInventoryUpdated = {
+    quantity: data.quantity,
+    unitary_value: data.unitary_value,
+    total_value: Number(newData.toFixed(2)),
+  };
+  
+  await inventorysRepository.update({ id: id }, newInventoryUpdated);
+  
+  const listUpdated = await listInventoryRepository();
+  const productUpdated = listUpdated.find((product) => product.id === id);
 
   return productUpdated;
 };
