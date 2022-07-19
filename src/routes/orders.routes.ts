@@ -9,9 +9,19 @@ import updateOrderController from "../controllers/orders/updateOrder.controller"
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensurePermissionMiddleware from "../middlewares/ensurePermission.middleware";
 
+import {
+  orderCreateSchema,
+  validateOrderCreate,
+} from "../middlewares/validations/validateOrderCreate.middleware";
+
 const ordersRoutes = Router();
 
-ordersRoutes.post("", ensureAuthMiddleware, createOrderController);
+ordersRoutes.post(
+  "",
+  ensureAuthMiddleware,
+  validateOrderCreate(orderCreateSchema),
+  createOrderController
+);
 
 // ordersRoutes.get(
 //   "",
