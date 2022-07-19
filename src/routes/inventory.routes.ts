@@ -10,6 +10,7 @@ import updateInventoryController from "../controllers/inventory/updateInventory.
 import deleteInventoryController from "../controllers/inventory/deleteInventory.controller";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensurePermissionMiddleware from "../middlewares/ensurePermission.middleware";
+import ensureInventoryQuantityMiddleware from "../middlewares/ensureInventoryQuantity.middleware";
 
 inventoryRoutes.post(
   "",
@@ -24,6 +25,7 @@ inventoryRoutes.patch(
   "/:id",
   ensureAuthMiddleware,
   ensurePermissionMiddleware,
+  ensureInventoryQuantityMiddleware,
   updateInventoryController
 );
 inventoryRoutes.delete(

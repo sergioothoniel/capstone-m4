@@ -16,30 +16,33 @@ import { AppError } from "../../errors/appError";
 
 const createInventoryService = async ({
   product_id,
-  unitary_value,
+  total_value,
   quantity,
 }: IInventoryRequest) => {
+  
+  if (!product_id || !total_value || !quantity) {
+    throw new AppError("Enter the information correctly!", 400);
+  }
+
   const date: Date = new Date();
 
   const product = await listProductByIdService(product_id);
 
-  const middleValue = quantity / unitary_value;
+  const unitary_value = total_value / quantity;
 
   const inventoryObject: IInventoryResponse = {
     id: uuid(),
     product: product,
     unitary_value: unitary_value,
     quantity: quantity,
-    total_value: middleValue,
+    total_value: total_value,
     created_at: date,
     updated_at: date,
   };
 
-  
   const newInventory = createInventoryRepository(inventoryObject);
-  console.log(newInventory)
-  
-  const inventory =  await saveInventoryRepository(newInventory);
+
+  const inventory = await saveInventoryRepository(newInventory);
 
   return inventory;
 };

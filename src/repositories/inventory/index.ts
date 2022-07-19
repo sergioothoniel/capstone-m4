@@ -45,23 +45,11 @@ export const deleteInventoryRepository = async (id: string) => {
 export const updateInventoryRepository = async ({
   id,
   data,
-}: IInventoryUpdate) => {
-  const inventory = await listInventoryRepository();
-  const inventoryUpdated = inventory.find((product) => product.id === id);
-  
-  const newData = data.unitary_value
-  ? data.quantity / data.unitary_value
-  : data.quantity / inventoryUpdated!.unitary_value;
-  
-  const newInventoryUpdated: IInventoryUpdated = {
-    quantity: data.quantity,
-    unitary_value: data.unitary_value,
-    total_value: Number(newData.toFixed(2)),
-  };
-  
-  await inventorysRepository.update({ id: id }, newInventoryUpdated);
-  
+}: IInventoryUpdated) => {
+  await inventorysRepository.update({ id: id }, data);
+
   const listUpdated = await listInventoryRepository();
+  
   const productUpdated = listUpdated.find((product) => product.id === id);
 
   return productUpdated;

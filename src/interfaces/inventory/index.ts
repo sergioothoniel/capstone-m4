@@ -1,6 +1,6 @@
 export interface IInventoryRequest {
   product_id: string;
-  unitary_value: number;
+  total_value: number;
   quantity: number;
 }
 
@@ -16,18 +16,18 @@ export interface IInventoryResponse {
 
 export interface IInventoryUpdate {
   id: string;
+  type_order: string;
   data: {
     quantity: number;
     unitary_value?: number;
   };
 }
 export interface IInventoryUpdated {
-  
- 
+  id: string;
+  data: {
     quantity: number;
     unitary_value?: number;
-    total_value: number;
- 
+  };
 }
 export interface IInventoryList {
   id: string;

@@ -10,13 +10,16 @@ const updateInventoryController = async (req: Request, res: Response) => {
   if (!id) {
     throw new AppError("ID not entered");
   }
-
+  const type_order = data.type_order;
   const inventory = await updateInventoryService({
     id,
+    type_order,
     data,
   });
 
-  return res.status(201).json({message: "Inventory updated", inventory: inventory});
+  return res
+    .status(201)
+    .json({ message: "Inventory updated", inventory: inventory });
 };
 
 export default updateInventoryController;
