@@ -1,6 +1,7 @@
 import appDataSource from "../../data-source";
 import { Product } from "../../entities/product.entity";
 import {
+  IProductFormated,
   IProductsRequest,
   IProductsResponse,
   IProductUpdate,
@@ -8,23 +9,32 @@ import {
 
 export const productsRepository = appDataSource.getRepository(Product);
 
-export const listProductRepository = async (): Promise<IProductsResponse[]> => {
+export const listProductRepository = async () => {
   const products = await productsRepository.find();
-  return products;
+  const usersFormated = products.map((value):IProductFormated => {
+
+    const user: string = value.user.id;
+
+    const newProduct = { ...value, user: user };
+
+    return newProduct;
+  });
+
+  return usersFormated;
 };
 
-export const createUProductsRepository = (
-  newProduct: any
-)=> {
+export const createUProductsRepository = (newProduct: any) => {
   const product = productsRepository.create(newProduct);
   return product;
 };
 
-export const saveProductRepository = async (
-  newProduct: any
-): Promise<IProductsResponse> => {
+export const saveProductRepository = async (newProduct: any) => {
   const product = await productsRepository.save(newProduct);
-  return product;
+
+  const poductsList = await listProductRepository()
+  const productSaved = poductsList.find(value => value.id === product.id)
+
+  return productSaved;
 };
 
 export const deleteProductRepository = async (id: string) => {
