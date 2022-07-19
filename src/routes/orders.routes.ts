@@ -16,21 +16,18 @@ ordersRoutes.post("", ensureAuthMiddleware, createOrderController);
 
 ordersRoutes.get(
   "",
-  ensureAuthMiddleware,
-  ensurePermissionMiddleware,
+  ensureAuthMiddleware,  
   listOrdersFormatedController
 );
 
 ordersRoutes.get(
   "/listall",
-  ensureAuthMiddleware,
-  ensurePermissionMiddleware,
+  ensureAuthMiddleware,  
   listAllOrdersController
 );
 ordersRoutes.get(
   "/:id",
-  ensureAuthMiddleware,
-  ensurePermissionMiddleware,
+  ensureAuthMiddleware,  
   listOneOrderController
 );
 ordersRoutes.delete(
@@ -41,8 +38,7 @@ ordersRoutes.delete(
 );
 ordersRoutes.patch(
   "/:id",
-  ensureAuthMiddleware,
-  ensurePermissionMiddleware,
+  ensureAuthMiddleware,  
   updateOrderController
 );
 
