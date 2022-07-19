@@ -5,9 +5,11 @@ const createProductController = async (
   request: Request,
   response: Response
 ) => {
-  const product = request.body;
+  const userId = request.userData.id
 
-  const newProduct = await createProductService(product);
+  const product = request.body;
+  
+  const newProduct = await createProductService(product, userId);
 
   return response.status(200).json(newProduct);
 };
