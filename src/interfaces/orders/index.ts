@@ -5,6 +5,12 @@ export interface IOrderRequest {
   type: string;
 }
 
+export interface IOrderCreate {
+  product_id: string;
+  quantity: number;
+  type: string;
+}
+
 export interface IOrderResponse {
   id: string;
   product?: object;
