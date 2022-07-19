@@ -8,17 +8,19 @@ import updateOrderController from "../controllers/orders/updateOrder.controller"
 
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensurePermissionMiddleware from "../middlewares/ensurePermission.middleware";
+import listOrdersFormatedController from "../controllers/orders/listOrdersFormated.controller";
 
 const ordersRoutes = Router();
 
 ordersRoutes.post("", ensureAuthMiddleware, createOrderController);
 
-// ordersRoutes.get(
-//   "",
-//   ensureAuthMiddleware,
-//   ensurePermissionMiddleware,
-//   listOrdersController
-// );
+ordersRoutes.get(
+  "",
+  ensureAuthMiddleware,
+  ensurePermissionMiddleware,
+  listOrdersFormatedController
+);
+
 ordersRoutes.get(
   "/listall",
   ensureAuthMiddleware,
