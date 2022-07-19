@@ -8,12 +8,29 @@ import listInventoryFormatedController from "../controllers/inventory/listInvent
 import listInventoryByIdController from "../controllers/inventory/listInventoryById.controller";
 import updateInventoryController from "../controllers/inventory/updateInventory.controller";
 import deleteInventoryController from "../controllers/inventory/deleteInventory.controller";
+import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
+import ensurePermissionMiddleware from "../middlewares/ensurePermission.middleware";
 
-inventoryRoutes.post("", createInventoryController);
+inventoryRoutes.post(
+  "",
+  ensureAuthMiddleware,
+  ensurePermissionMiddleware,
+  createInventoryController
+);
 inventoryRoutes.get("", listInventoryController);
 inventoryRoutes.get("/listall", listInventoryFormatedController);
 inventoryRoutes.get("/:id", listInventoryByIdController);
-inventoryRoutes.patch("/:id", updateInventoryController);
-inventoryRoutes.delete("/:id", deleteInventoryController);
+inventoryRoutes.patch(
+  "/:id",
+  ensureAuthMiddleware,
+  ensurePermissionMiddleware,
+  updateInventoryController
+);
+inventoryRoutes.delete(
+  "/:id",
+  ensureAuthMiddleware,
+  ensurePermissionMiddleware,
+  deleteInventoryController
+);
 
 export default inventoryRoutes;
