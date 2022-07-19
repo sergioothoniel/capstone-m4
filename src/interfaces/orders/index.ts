@@ -4,8 +4,6 @@ export interface IOrderRequest {
     user_id: string;
     quantity: number;
     type: string;
-    active: boolean;
-
 }
 
 export interface IOrderResponse {
