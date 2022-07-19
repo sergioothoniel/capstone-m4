@@ -12,6 +12,7 @@ import {
 import { Category } from "../../entities/category.entity";
 import { User } from "../../entities/user.entity";
 import { listUsersRepository } from "../../repositories/users";
+import { categoriesRepository } from "../../repositories/categories";
 
 const createProductService = async (data: IProductsRequest, id: string) => {
   const { name, description, category_id } = data;
@@ -26,17 +27,18 @@ const createProductService = async (data: IProductsRequest, id: string) => {
     throw new AppError("product already registered", 404);
   }
 
-  const categoryRepository = appDataSource.getRepository(Category);
+  const categoryRepository = categoriesRepository;
 
   const categories = await categoryRepository.find();
+  console.log(categories);
   const findCategory = categories.find((category) => {
-    category.id === category_id;
+    return category.id === category_id;
   });
 
-  // if (!findCategory) {
-  //   throw new AppError("category not found", 404);
-  // }
-  
+  if (!findCategory) {
+    throw new AppError("category not found", 404);
+  }
+
   const users = await listUsersRepository();
   const userId = users.find((user) => {
     return user.id === id;
@@ -53,8 +55,8 @@ const createProductService = async (data: IProductsRequest, id: string) => {
   };
 
   const productResponse = createUProductsRepository(newProduct);
-  const x = await saveProductRepository(productResponse);
+  const productTrated = await saveProductRepository(productResponse);
 
-  return x;
+  return productTrated;
 };
 export default createProductService;
