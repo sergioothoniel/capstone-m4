@@ -6,6 +6,7 @@ import productsRoutes from "./routes/products.routes";
 import loginRoute from "./routes/login.routes";
 import permissionsRoutes from "./routes/permissions.routes";
 import companiesRoutes from "./routes/companies.routes";
+import inventoryRoutes from "./routes/inventory.routes";
 
 const app = express();
 app.use(express.json());
@@ -15,6 +16,7 @@ app.use("/users", userRouter);
 app.use("/login", loginRoute)
 app.use("/permissions", permissionsRoutes);
 app.use("/companies", companiesRoutes)
+app.use("/inventory", inventoryRoutes)
 app.use(appErrorMiddleware);
 
 export default app;
