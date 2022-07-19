@@ -1,26 +1,41 @@
 import appDataSource from "../../data-source";
 import { Order } from "../../entities/order.entity";
-import { IOrderRequest, IOrderResponse } from "../../interfaces/orders";
 
 export const ordersRepository = appDataSource.getRepository(Order);
 
-export const listOrdersRepository = async (): Promise<IOrderResponse[]> => {
+export const listOrdersRepository = async () => {
   const orders = await ordersRepository.find();
-  return orders;
+
+  const ordersListFormated = orders.map(order =>{
+    const product = order.product.id
+    const user = order.user.id
+
+    const orderFormated = {...order, product, user}
+
+    return orderFormated
+
+  })
+  return ordersListFormated;
 };
 
 export const createOrdersRepository = (
-  newOrder: IOrderRequest
-): IOrderResponse => {
+  newOrder: any
+) => {
   const order = ordersRepository.create(newOrder);
   return order;
 };
 
 export const saveOrdersRepository = async (
-  newOrder: IOrderResponse
-): Promise<IOrderResponse> => {
+  newOrder: any
+) => {
   const order = await ordersRepository.save(newOrder);
-  return order;
+
+  const product = order.product.id
+  const user = order.user.id
+
+  const orderFormated = {...order, product, user}
+
+  return orderFormated;
 };
 
 export const deleteOrderRepository = async (id: string) => {
