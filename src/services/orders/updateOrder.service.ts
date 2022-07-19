@@ -15,6 +15,10 @@ const updateOrderService = async (orderId: string, data: IOrderUpdate) => {
     throw new AppError("Order not found", 404);
   }
 
+  if (!orderToUpdate.active) {
+    throw new AppError("This order is inactive", 404);
+  }
+
   let newData: any = { ...data };
 
   if (data.product) {
