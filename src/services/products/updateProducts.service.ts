@@ -2,6 +2,7 @@ import appDataSource from "../../data-source";
 import { Category } from "../../entities/category.entity";
 import { AppError } from "../../errors/appError";
 import { IProductsRequest } from "../../interfaces/products";
+import { categoriesRepository } from "../../repositories/categories";
 
 import {
   updateProductRepository,
@@ -12,10 +13,10 @@ const updateProductsService = async (id: string, data: IProductsRequest) => {
   const { name, description, category_id, user_id } = data;
   const product = await productsRepository.findOneBy({ id: id });
 
-  const categoryRepository = appDataSource.getRepository(Category);
+  const categoryRepository = categoriesRepository;
   const categories = await categoryRepository.find();
   const findCategory = categories.find((category) => {
-    category.id === category_id;
+    return category.id === category_id;
   });
 
   if (!product) {
