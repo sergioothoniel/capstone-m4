@@ -4,6 +4,11 @@ export interface IProductsRequest {
   category_id: string;
   user_id: string;
 }
+export interface IProductSchema {
+  name: string;
+  description: string;
+  category_id: string;
+}
 
 export interface IProductsResponse {
   id: string;
