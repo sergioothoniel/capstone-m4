@@ -14,24 +14,29 @@ import {
 
 export const inventorysRepository = appDataSource.getRepository(Inventory);
 
-export const listInventoryRepository = async (): Promise<
-  IInventoryResponse[]
-> => {
+export const listInventoryRepository = async () => {
   const inventory = await inventorysRepository.find();
-  return inventory;
+
+  const inventoryFormated = inventory.map(value => {
+    const product = value.product.id
+    return {...value, product}
+  })
+  return inventoryFormated;
 };
 
-export const createInventoryRepository = (newProducts: IInventoryResponse) => {
+export const createInventoryRepository = (newProducts: any) => {
   const product = inventorysRepository.create(newProducts);
   return product;
 };
 
 export const saveInventoryRepository = async (
-  newProduct: IInventoryResponse
-): Promise<IInventoryResponse> => {
+  newProduct: any
+) => {
   const product = await inventorysRepository.save(newProduct);
 
-  return product;
+  const productId = product.product.id
+
+  return {...product, product: productId};
 };
 
 export const deleteInventoryRepository = async (id: string) => {
@@ -42,10 +47,7 @@ export const deleteInventoryRepository = async (id: string) => {
   await inventorysRepository.delete(productToDelete!.id);
 };
 
-export const updateInventoryRepository = async ({
-  id,
-  data,
-}: any) => {
+export const updateInventoryRepository = async (id: string, data: any) => {
   await inventorysRepository.update({ id: id }, data);
 
   const listUpdated = await listInventoryRepository();

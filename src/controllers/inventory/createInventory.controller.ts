@@ -3,15 +3,15 @@ import { Request, Response } from "express";
 import createInventoryService from "../../services/inventory/createInventory.service";
 
 const createInventoryController = async (req: Request, res: Response) => {
-  const { product_id, total_value, quantity } = req.body;
+  const { product_id, unitary_value, quantity } = req.body;
 
-  const newCompanie = await createInventoryService({
+  const product = await createInventoryService({
     product_id,
-    total_value,
+    unitary_value,
     quantity,
   });
 
-  return res.status(201).send(newCompanie);
+  return res.status(201).send(product);
 };
 
 export default createInventoryController;
