@@ -34,7 +34,7 @@ describe("testing route /products", () => {
   test("Should be able to create product", async () => {
     const responseLogin = await request(app).post("/login").send(user);
     const token = "Bearer " + responseLogin.body.token;
-    
+
     const responseCreatePermission = await request(app)
       .post("/permissions")
       .set("Authorization", token)
@@ -50,7 +50,7 @@ describe("testing route /products", () => {
       .set("Authorization", token)
       .send(category);
 
-    const categoryId = responseCreateCategory.body.id;
+    const categoryId = responseCreateCategory.body.category.id;
 
     const response = await request(app)
       .post("/products")
@@ -74,19 +74,19 @@ describe("testing route /products", () => {
     const permissionId = responseCreatePermission.body.newPermission.id;
 
     const category = {
-      name: "eletronico",
+      name: "eletronicoo",
     };
 
-    const responseCreateCompany = await request(app)
+    const responseCreatecategory = await request(app)
       .post("/categories")
       .set("Authorization", token)
       .send(category);
 
-    const companyId = responseCreateCompany.body.id;
+    const categoryId = responseCreatecategory.body.category.id;
     const response = await request(app)
       .post("/products")
       .set("Authorization", token)
-      .send({ ...productTest, category: category });
+      .send({ ...productTest, category_id: categoryId });
 
     expect(response.status).toBe(404);
     expect(response.body).toHaveProperty(

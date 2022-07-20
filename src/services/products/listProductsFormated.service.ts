@@ -2,9 +2,6 @@ import { listProductRepository } from "../../repositories/products";
 
 const listProductsFormatedService = async (page = 1) => {
   const products = await listProductRepository();
-  //   const productsWithoutPassword = products.map((product) => {
-  //     return { ...product, password: undefined };
-  //   });
 
   const productsPerPage = 15;
   const productsQuantity = products.length;
@@ -16,13 +13,13 @@ const listProductsFormatedService = async (page = 1) => {
     return index >= firstIndex && index < lastIndex;
   });
 
-  const requestResult = {
+  const productsPages = {
     itensQuantity: productsQuantity,
     totalPages: pages,
     page,
     products: productsToShow,
   };
 
-  return requestResult;
+  return productsPages;
 };
 export default listProductsFormatedService;

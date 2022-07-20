@@ -5,15 +5,14 @@ import createInventoryService from "../../services/inventory/createInventory.ser
 const createInventoryController = async (req: Request, res: Response) => {
   const { product_id, unitary_value, quantity } = req.body;
 
-  const newInventory = await createInventoryService({
+  const product = await createInventoryService({
     product_id,
     unitary_value,
     quantity,
   });
 
-  return res
-    .status(201)
-    .send({ message: "Create inventory", newInventory: newInventory });
+
+  return res.status(201).send(product);
 };
 
 export default createInventoryController;
