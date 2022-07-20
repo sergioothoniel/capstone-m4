@@ -11,11 +11,11 @@ export const productsRepository = appDataSource.getRepository(Product);
 
 export const listProductRepository = async () => {
   const products = await productsRepository.find();
-  const usersFormated = products.map((value):IProductFormated => {
-
+  const usersFormated = products.map((value): IProductFormated => {
     const user: string = value.user.id;
+    const category: string = value.category.name;
 
-    const newProduct = { ...value, user: user };
+    const newProduct = { ...value, user: user, category };
 
     return newProduct;
   });
@@ -31,8 +31,8 @@ export const createUProductsRepository = (newProduct: any) => {
 export const saveProductRepository = async (newProduct: any) => {
   const product = await productsRepository.save(newProduct);
 
-  const poductsList = await listProductRepository()
-  const productSaved = poductsList.find(value => value.id === product.id)
+  const poductsList = await listProductRepository();
+  const productSaved = poductsList.find((value) => value.id === product.id);
 
   return productSaved;
 };

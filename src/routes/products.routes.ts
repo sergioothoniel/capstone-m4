@@ -11,8 +11,8 @@ import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 const productsRoutes = Router();
 
 productsRoutes.post("", ensureAuthMiddleware, createProductController);
-productsRoutes.get("", ensureAuthMiddleware, listProductsController);
-productsRoutes.get("/listall", ensureAuthMiddleware, listProductsFormatedController)
+productsRoutes.get("", ensureAuthMiddleware, listProductsFormatedController);
+productsRoutes.get("/listall", ensureAuthMiddleware, listProductsController);
 productsRoutes.get("/:id", ensureAuthMiddleware, listProductsByIdController);
 productsRoutes.patch("/:id", ensureAuthMiddleware, updateProductsController);
 productsRoutes.delete("/:id", ensureAuthMiddleware, deleteProductController);

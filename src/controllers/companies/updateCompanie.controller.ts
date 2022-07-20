@@ -9,12 +9,15 @@ const userUpdateController = async (req: Request, res: Response) => {
     throw new AppError("ID not entered");
   }
 
-  const user = await updateCompanieService({
+  const company = await updateCompanieService({
     id,
     data,
   });
 
-  return res.status(201).json({ message: "Companie updated" });
+  return res.status(200).json({
+     message: "Companie updated",
+     company
+     });
 };
 
 export default userUpdateController;
