@@ -7,10 +7,11 @@ import listCompaniesController from "../controllers/companies/listCompanies.cont
 import updateCompanyController from "../controllers/companies/updateCompanie.controller";
 
 import deleteCompanyController from "../controllers/companies/deleteCompanie.controller";
+import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 
-companiesRoutes.post("", createCompanieController);
-companiesRoutes.get("", listCompaniesController);
-companiesRoutes.patch("/:id", updateCompanyController);
-companiesRoutes.delete("/:id", deleteCompanyController);
+companiesRoutes.post("", ensureAuthMiddleware, createCompanieController);
+companiesRoutes.get("", ensureAuthMiddleware, listCompaniesController);
+companiesRoutes.patch("/:id", ensureAuthMiddleware, updateCompanyController);
+companiesRoutes.delete("/:id", ensureAuthMiddleware, deleteCompanyController);
 
 export default companiesRoutes;
