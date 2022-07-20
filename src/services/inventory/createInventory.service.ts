@@ -13,33 +13,34 @@ import {
 import listProductByIdService from "../products/listProductById.service";
 
 import { AppError } from "../../errors/appError";
+import { productsRepository } from "../../repositories/products";
 
 const createInventoryService = async ({
   product_id,
   unitary_value,
   quantity,
 }: IInventoryRequest) => {
-  const date: Date = new Date();
+  
+  if (!product_id || !unitary_value || !quantity) {
+    throw new AppError("Enter the information correctly!", 400);
+  }  
 
-  const product = await listProductByIdService(product_id);
+  const products = await productsRepository.find();
+  const product = products.find(value => value.id === product_id)
 
-  const middleValue = quantity / unitary_value;
 
-  const inventoryObject: IInventoryResponse = {
-    id: uuid(),
+  const total_value = unitary_value * quantity;
+
+  const inventoryObject = {  
     product: product,
     unitary_value: unitary_value,
     quantity: quantity,
-    total_value: middleValue,
-    created_at: date,
-    updated_at: date,
+    total_value: total_value,    
   };
 
-  
   const newInventory = createInventoryRepository(inventoryObject);
-  console.log(newInventory)
-  
-  const inventory =  await saveInventoryRepository(newInventory);
+
+  const inventory = await saveInventoryRepository(newInventory);
 
   return inventory;
 };

@@ -7,12 +7,12 @@ import {
 import { AppError } from "../../errors/appError";
 
 const deleteInventoryService = async ({ id }: IInventoryList) => {
-  const inventories = await listInventoryRepository();
+  const inventory = await listInventoryRepository();
 
-  const inventoryAlreadyExists = inventories.find((user: any) => user.id === id);
+  const item = inventory.find((value) => value.id === id);
 
-  if (!inventoryAlreadyExists) {
-    throw new AppError("Inventory not found", 404);
+  if (!item) {
+    throw new AppError("Item not found", 404);
   }
 
   await deleteInventoryRepository(id);

@@ -6,7 +6,7 @@ const deleteInventoryController = async (req: Request, res: Response) => {
 
   const user = await deleteInventoryService({ id });
 
-  return res.status(200).json({ message: "Companie deleted" });
+  return res.status(200).json({ message: "Inventory deleted" });
 };
 
 export default deleteInventoryController;

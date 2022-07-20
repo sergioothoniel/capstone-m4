@@ -5,11 +5,11 @@ import listInventoryFormatedService from "../../services/inventory/listInventory
 const listInventoryFormatedController = async (req: Request, res: Response) => {
   const { page } = req.query;
 
-  const inventoriesList = await listInventoryFormatedService(
+  const inventory = await listInventoryFormatedService(
     page ? Number(page) : 1
   );
 
-  return res.status(200).json(inventoriesList);
+  return res.status(200).json(inventory);
 };
 
 export default listInventoryFormatedController;
