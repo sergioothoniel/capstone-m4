@@ -1,15 +1,23 @@
 import { Router } from "express";
 
-const routes = Router();
+const companiesRoutes = Router();
 
 import createCompanieController from "../controllers/companies/createCompanie.controller";
 import listCompaniesController from "../controllers/companies/listCompanies.controller";
-import updateCompanieService from "../services/companies/updateCompanie.service";
-import deleteCompanieService from "../services/companies/deleteCompanie.service";
+import updateCompanyController from "../controllers/companies/updateCompanie.controller";
 
-routes.post("/companies", createCompanieController);
-routes.get("/companies",  listCompaniesController);
-routes.patch("/companies/:id", updateCompanieService);
-routes.delete("/companies/:id", deleteCompanieService);
+import deleteCompanyController from "../controllers/companies/deleteCompanie.controller";
+import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 
-export default routes;
+
+import {
+  validateCompanyCreate,
+  companyCreateSchema,
+} from "../middlewares/validations/validateCompanyCreate.middleware";
+companiesRoutes.post("", ensureAuthMiddleware, validateCompanyCreate(companyCreateSchema), createCompanieController);
+companiesRoutes.get("", ensureAuthMiddleware, listCompaniesController);
+companiesRoutes.patch("/:id", ensureAuthMiddleware, updateCompanyController);
+companiesRoutes.delete("/:id", ensureAuthMiddleware, deleteCompanyController);
+
+
+export default companiesRoutes;

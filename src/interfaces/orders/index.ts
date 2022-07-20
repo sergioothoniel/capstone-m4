@@ -1,22 +1,24 @@
 export interface IOrderRequest {
-
-    product_id: string;
-    user_id: string;
-    quantity: number;
-    type: string;
-    active: boolean;
-
+  product_id: string;
+  user_id: string;
+  quantity: number;
+  type: string;
 }
 
 export interface IOrderResponse {
+  id: string;
+  product?: object;
+  user?: object;
+  quantity: number;
+  type: string;
+  active: boolean;
+  created_at: Date;
+  updated_at: Date;
+}
 
-    id: string;
-    product_id: string;
-    user_id: string;
-    quantity: number;
-    type: string;
-    active: boolean;
-    created_at: string;
-    updated_at: string;
-
+export interface IOrderUpdate {
+  type?: string;
+  product?: any;
+  quantity?: number;
+  active?: boolean;
 }

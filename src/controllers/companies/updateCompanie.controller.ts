@@ -1,29 +1,23 @@
 import { Request, Response } from "express";
-import updateCompanieService from "../../services/companies/updateCompanie.service";
+import { AppError } from "../../errors/appError";
+import updateCompanieService from "../../services/companies/updateCompany.service";
 
 const userUpdateController = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const { name } = req.body;
-
-    if (!id) {
-      throw new Error("ID not entered");
-    }
-
-    const user = await updateCompanieService({
-      id,
-      name,
-    });
-
-    return res.status(201).json({ message: "Companie updated" });
-  } catch (err) {
-    if (err instanceof Error) {
-      return res.status(400).send({
-        error: err.name,
-        message: err.message,
-      });
-    }
+  const { id } = req.params;
+  const data = req.body;
+  if (!id) {
+    throw new AppError("ID not entered");
   }
+
+  const company = await updateCompanieService({
+    id,
+    data,
+  });
+
+  return res.status(200).json({
+     message: "Companie updated",
+     company
+     });
 };
 
 export default userUpdateController;

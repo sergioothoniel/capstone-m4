@@ -1,5 +1,8 @@
+import { Response } from "express";
+
 export class AppError extends Error {
-  statusCode: number;
+  statusCode
+
   constructor(message: string, statusCode: number = 400) {
     super();
     this.message = message;

@@ -1,6 +1,6 @@
 import appDataSource from "../../data-source";
 import { Company } from "../../entities/company.entity";
-import { ICompanie, ICreateCompanie } from "../../interfaces/companies";
+import { ICreateCompany } from "../../interfaces/companies";
 
 export const companiesRepository = appDataSource.getRepository(Company)
 
@@ -10,12 +10,12 @@ export const listCompaniesRepository = async () =>{
 }
 
 
-export const createCompaniesRepository = (newCompanie: ICreateCompanie) =>{
+export const createCompaniesRepository = (newCompanie: ICreateCompany) =>{
     const company = companiesRepository.create(newCompanie)
     return company
 }
 
-export const saveCompaniesRepository = async (newCompanie: ICreateCompanie): Promise<ICreateCompanie> =>{
+export const saveCompaniesRepository = async (newCompanie: ICreateCompany): Promise<ICreateCompany> =>{
     const company = await companiesRepository.save(newCompanie)
     return company
 }
@@ -29,3 +29,12 @@ export const deleteCompaniesRepository = async (id: string) =>{
     await companiesRepository.delete(companyToDelete!.id)
 }
 
+export const updateCompaiesRepository = async (id: string, name: any) =>{
+
+    await companiesRepository.update({id: id}, {name: name})
+
+    const companies = await listCompaniesRepository()
+    const companyUpdated = companies.find(company => company.id === id)
+
+    return companyUpdated
+}

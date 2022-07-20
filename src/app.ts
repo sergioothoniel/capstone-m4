@@ -1,18 +1,26 @@
 import express from "express";
-import "express-async-errors"
+import "express-async-errors";
 import appErrorMiddleware from "./middlewares/appError.middlewares";
 import userRouter from "../src/routes/users.routes";
-import sessionRouter from "../src/routes/session.routes";
+import productsRoutes from "./routes/products.routes";
+import loginRoute from "./routes/login.routes";
+import permissionsRoutes from "./routes/permissions.routes";
+import companiesRoutes from "./routes/companies.routes";
+import inventoryRoutes from "./routes/inventory.routes";
+import categoryRoutes from "./routes/categories.routes";
+import ordersRoutes from "./routes/orders.routes";
 
 const app = express();
 app.use(express.json());
 
-app.use("/users", userRouter); 
-app.use("/login", sessionRouter); 
-// app.use("products", productsRoutes);
-// app.use("companies", companiesRoutes);
-// app.use("orders", ordersRoutes);
-// app.use("categories", categoriesRoutes);
+app.use("/products", productsRoutes);
+app.use("/users", userRouter);
+app.use("/login", loginRoute);
+app.use("/permissions", permissionsRoutes);
+app.use("/inventory", inventoryRoutes);
+app.use("/companies", companiesRoutes);
+app.use("/categories", categoryRoutes);
+app.use("/orders", ordersRoutes);
 
 app.use(appErrorMiddleware);
 
