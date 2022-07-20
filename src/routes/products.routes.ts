@@ -4,14 +4,17 @@ import createProductController from "../controllers/products/createProducts.cont
 import deleteProductController from "../controllers/products/deleteProduct.controller";
 import listProductsByIdController from "../controllers/products/listProductById.controller";
 import listProductsController from "../controllers/products/listProducts.controller";
+import listProductsFormatedController from "../controllers/products/listProductsFormated.controller";
 import updateProductsController from "../controllers/products/updateProducts.controller";
+import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 
 const productsRoutes = Router();
 
-productsRoutes.post("", createProductController);
-productsRoutes.get("", listProductsController);
-productsRoutes.get("/:id", listProductsByIdController);
-productsRoutes.patch("/:id", updateProductsController);
-productsRoutes.delete("/:id", deleteProductController);
+productsRoutes.post("", ensureAuthMiddleware, createProductController);
+productsRoutes.get("", ensureAuthMiddleware, listProductsFormatedController);
+productsRoutes.get("/listall", ensureAuthMiddleware, listProductsController);
+productsRoutes.get("/:id", ensureAuthMiddleware, listProductsByIdController);
+productsRoutes.patch("/:id", ensureAuthMiddleware, updateProductsController);
+productsRoutes.delete("/:id", ensureAuthMiddleware, deleteProductController);
 
 export default productsRoutes;

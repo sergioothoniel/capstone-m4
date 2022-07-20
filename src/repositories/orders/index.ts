@@ -1,40 +1,56 @@
-import appDataSource from "../../data-source"
-import { Order } from "../../entities/order.entity"
-import {IOrderRequest, IOrderResponse} from "../../interfaces/orders"
+import appDataSource from "../../data-source";
+import { Order } from "../../entities/order.entity";
 
-export const ordersRepository = appDataSource.getRepository(Order)
+export const ordersRepository = appDataSource.getRepository(Order);
 
-export const listOrdersRepository = async (): Promise<IOrderResponse[]> =>{
-    const orders = await ordersRepository.find()
-    return orders
-}
+export const listOrdersRepository = async () => {
+  const orders = await ordersRepository.find();
 
+  const ordersListFormated = orders.map(order =>{
+    const product = order.product.id
+    const user = order.user.id
 
-export const createOrdersRepository = (newOrder: IOrderRequest): IOrderResponse =>{
-    const order = ordersRepository.create(newOrder)
-    return order
-}
+    const orderFormated = {...order, product, user}
 
-export const saveOrdersRepository = async (newOrder: IOrderRequest): Promise<IOrderResponse> =>{
-    const order = await ordersRepository.save(newOrder)
-    return order
-}
+    return orderFormated
 
-export const deleteOrderRepository = async (id: string) =>{
+  })
+  return ordersListFormated;
+};
 
-    const orders = await listOrdersRepository()
+export const createOrdersRepository = (
+  newOrder: any
+) => {
+  const order = ordersRepository.create(newOrder);
+  return order;
+};
 
-    const orderToDelete = orders.find(order => order.id === id)
+export const saveOrdersRepository = async (
+  newOrder: any
+) => {
+  const order = await ordersRepository.save(newOrder);
 
-    await ordersRepository.delete(orderToDelete!.id)
-}
+  const product = order.product.id
+  const user = order.user.id
 
-export const updateOrdersRepository = async (id: string)=>{
+  const orderFormated = {...order, product, user}
 
-    await ordersRepository.update({id: id}, {active: false})
+  return orderFormated;
+};
 
-    const orders = await listOrdersRepository()
-    const orderUpdated = orders.find(order => order.id === id)
+export const deleteOrderRepository = async (id: string) => {
+  const orders = await listOrdersRepository();
 
-    return orderUpdated
-}
+  const orderToDelete = orders.find((order) => order.id === id);
+
+  await ordersRepository.delete(orderToDelete!.id);
+};
+
+export const updateOrdersRepository = async (id: string) => {
+  await ordersRepository.update({ id: id }, { active: false });
+
+  const orders = await listOrdersRepository();
+  const orderUpdated = orders.find((order) => order.id === id);
+
+  return orderUpdated;
+};
