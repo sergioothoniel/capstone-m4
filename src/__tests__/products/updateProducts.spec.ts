@@ -62,6 +62,9 @@ describe("testing route /products", () => {
       .patch(`/products/${productId}`)
       .set("Authorization", token)
       .send({ name: "Test product" });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("message");
   });
 
   test("Should throw an error when send a wrong id", async () => {
