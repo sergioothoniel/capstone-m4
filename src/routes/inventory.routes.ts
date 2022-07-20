@@ -10,6 +10,8 @@ import updateInventoryController from "../controllers/inventory/updateInventory.
 import deleteInventoryController from "../controllers/inventory/deleteInventory.controller";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensurePermissionMiddleware from "../middlewares/ensurePermission.middleware";
+import ensureInventoryQuantityMiddleware from "../middlewares/ensureInventoryQuantity.middleware";
+import listInventoryByProductIdController from "../controllers/inventory/listInventoryByProductId.controller";
 
 import {
   validateInventoryCreate,
@@ -23,13 +25,15 @@ inventoryRoutes.post(
   validateInventoryCreate(inventoryCreateSchema),
   createInventoryController
 );
-inventoryRoutes.get("", listInventoryController);
-inventoryRoutes.get("/listall", listInventoryFormatedController);
+inventoryRoutes.get("/listall", listInventoryController);
+inventoryRoutes.get("", listInventoryFormatedController);
+inventoryRoutes.get("/products/:productId", ensureAuthMiddleware,listInventoryByProductIdController)
 inventoryRoutes.get("/:id", listInventoryByIdController);
 inventoryRoutes.patch(
   "/:id",
   ensureAuthMiddleware,
   ensurePermissionMiddleware,
+  ensureInventoryQuantityMiddleware,
   updateInventoryController
 );
 inventoryRoutes.delete(

@@ -8,7 +8,7 @@ const updateCategoryController = async (req: Request, res: Response) => {
   const { newName } = req.body
 
   const updateCategory = await updateCategoryService(id, newName)
-  return res.status(201).json(updateCategory)
+  return res.status(200).json(updateCategory)
 
 }
 export default updateCategoryController

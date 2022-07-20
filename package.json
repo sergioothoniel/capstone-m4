@@ -40,6 +40,7 @@
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.7",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "win-node-env": "^0.6.1"
   }
 }
