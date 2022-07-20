@@ -8,7 +8,9 @@ const deleteCategoryController = async (req: Request, res: Response) => {
 
   const deleteCategory = await deleteCategoryService(id)
 
-  return res.status(200).json(deleteCategory)
+  return res.status(200).json({
+    message: "Category Deleted"
+  })
 
 }
 

@@ -20,9 +20,9 @@ const updateCategoryService = async (id: string, newName: string) => {
     throw new AppError("Category not found", 404)
   }
 
-  categoryRepository.update(findCategory.id!, { name: newName })
+  const categoryUpdated = await categoryRepository.update(findCategory.id!, { name: newName })
 
-  return true
+  return categoryUpdated
 
 }
 export default updateCategoryService
