@@ -18,8 +18,8 @@ inventoryRoutes.post(
   ensurePermissionMiddleware,
   createInventoryController
 );
-inventoryRoutes.get("", listInventoryController);
-inventoryRoutes.get("/listall", listInventoryFormatedController);
+inventoryRoutes.get("/listall", listInventoryController);
+inventoryRoutes.get("", ensureAuthMiddleware, listInventoryFormatedController);
 inventoryRoutes.get("/:id", listInventoryByIdController);
 inventoryRoutes.patch(
   "/:id",
