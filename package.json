@@ -41,6 +41,7 @@
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.7",
     "uuid": "^8.3.2",
-    "win-node-env": "^0.6.1"
+    "win-node-env": "^0.6.1",
+    "yup": "^0.32.11"
   }
 }
