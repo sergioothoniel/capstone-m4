@@ -48,7 +48,7 @@ describe("testing route /products", () => {
     const responseCreateCategory = await request(app)
       .post("/categories")
       .set("Authorization", token)
-      .send(category);
+      .send({category});
 
     const categoryId = responseCreateCategory.body.category.id;
 
@@ -88,7 +88,7 @@ describe("testing route /products", () => {
       .set("Authorization", token)
       .send({ ...productTest, category_id: categoryId });
 
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(400);
     expect(response.body).toHaveProperty(
       "message",
       "Product already registered"

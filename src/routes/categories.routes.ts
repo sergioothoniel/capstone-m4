@@ -12,15 +12,17 @@ import {
   validateCategoryCreate,
   categoryCreateSchema,
 } from "../middlewares/validations/validateCategoryCreate.middleware";
+import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 
 routes.post(
   "",
+  ensureAuthMiddleware,
   validateCategoryCreate(categoryCreateSchema),
   createCategoryController
 );
-routes.get("", listCategoryController);
-routes.get("/one/:id", listCategoryByIdController);
-routes.patch("/:id", updateCategory);
-routes.delete("/:id", deleteCategoryController);
+routes.get("", ensureAuthMiddleware, listCategoryController);
+routes.get("/one/:id",ensureAuthMiddleware, listCategoryByIdController);
+routes.patch("/:id", ensureAuthMiddleware, updateCategory);
+routes.delete("/:id", ensureAuthMiddleware, deleteCategoryController);
 
 export default routes;
