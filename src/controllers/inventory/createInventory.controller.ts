@@ -11,6 +11,7 @@ const createInventoryController = async (req: Request, res: Response) => {
     quantity,
   });
 
+
   return res.status(201).send(product);
 };
 
