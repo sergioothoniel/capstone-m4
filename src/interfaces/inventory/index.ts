@@ -24,9 +24,10 @@ export interface IInventoryUpdate {
 }
 export interface IInventoryUpdated {
   id: string;
-  data: {
+  newData: {
     quantity: number;
     unitary_value?: number;
+    total_value: number;
   };
 }
 export interface IInventoryList {

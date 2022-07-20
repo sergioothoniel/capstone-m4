@@ -26,34 +26,39 @@ const updateInventoryService = async ({
   if (type_order === "input") {
     const newQuantity = inventoryAlreadyExists.quantity + Number(data.quantity);
 
-    const newUnitaryValue = data.unitary_value
-      ? data.unitary_value
-      : inventoryAlreadyExists.unitary_value;
+    const totalValueInput = data.quantity * data.unitary_value!;
+    const newTotalValue = inventoryAlreadyExists.total_value + totalValueInput;
 
-    data = {
+    const newUnitaryValue = newTotalValue / newQuantity;
+    // data.unitary_value
+    //   ? data.unitary_value
+    //   : inventoryAlreadyExists.unitary_value;
+
+    const newData = {
       quantity: newQuantity,
       unitary_value: newUnitaryValue,
+      total_value: newTotalValue,
     };
 
-    const updateInventory = await updateInventoryRepository({ id, data });
+    const updateInventory = await updateInventoryRepository({ id, newData });
     return updateInventory;
   }
-  
+
   if (type_order === "output") {
-    const newQuantity = inventoryAlreadyExists.quantity - data.quantity;
-    const newUnitaryValue = data.unitary_value
-      ? data.unitary_value
-      : inventoryAlreadyExists.unitary_value;
+    const newQuantity = inventoryAlreadyExists.quantity - Number(data.quantity);
+    const newTotalValue = newQuantity * inventoryAlreadyExists.unitary_value;
+    // data.unitary_value
+    //   ? data.unitary_value
+    //   : inventoryAlreadyExists.unitary_value;
 
-    data = {
+    const newData = {
       quantity: newQuantity,
-      unitary_value: newUnitaryValue,
+      total_value: newTotalValue,
     };
 
-    const updateInventory = await updateInventoryRepository({ id, data });
+    const updateInventory = await updateInventoryRepository({ id, newData });
     return updateInventory;
   }
-
 };
 
 export default updateInventoryService;

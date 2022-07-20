@@ -45,7 +45,7 @@ export const deleteInventoryRepository = async (id: string) => {
 export const updateInventoryRepository = async ({
   id,
   data,
-}: IInventoryUpdated) => {
+}: any) => {
   await inventorysRepository.update({ id: id }, data);
 
   const listUpdated = await listInventoryRepository();

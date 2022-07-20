@@ -22,6 +22,6 @@ app.use("/companies", companiesRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/orders", ordersRoutes);
 
-app.use(appErrorMiddleware);
+// app.use(appErrorMiddleware);
 
 export default app;
