@@ -8,9 +8,18 @@ import listProductsFormatedController from "../controllers/products/listProducts
 import updateProductsController from "../controllers/products/updateProducts.controller";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 
+import {
+  validateProductCreate,
+  productCreateSchema,
+} from "../middlewares/validations/validateProduct.middleware";
 const productsRoutes = Router();
 
-productsRoutes.post("", ensureAuthMiddleware, createProductController);
+productsRoutes.post(
+  "",
+  ensureAuthMiddleware,
+  validateProductCreate(productCreateSchema),
+  createProductController
+);
 productsRoutes.get("", ensureAuthMiddleware, listProductsFormatedController);
 productsRoutes.get("/listall", ensureAuthMiddleware, listProductsController);
 productsRoutes.get("/:id", ensureAuthMiddleware, listProductsByIdController);

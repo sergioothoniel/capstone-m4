@@ -6,11 +6,37 @@ import updatePermissionController from "../controllers/permissions/updatePermiss
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensurePermissionMiddleware from "../middlewares/ensurePermission.middleware";
 
-const permissionsRoutes = Router()
+import {
+  validatePermissionCreate,
+  permissionCreateSchema,
+} from "../middlewares/validations/validatePermission.middlewere";
 
-permissionsRoutes.post("",ensureAuthMiddleware, ensurePermissionMiddleware, createPermissionController)
-permissionsRoutes.get("", ensureAuthMiddleware, ensurePermissionMiddleware, listPermissionsController)
-permissionsRoutes.delete("/:id", ensureAuthMiddleware, ensurePermissionMiddleware, deletePermissionController)
-permissionsRoutes.patch("/:id", ensureAuthMiddleware, ensurePermissionMiddleware, updatePermissionController)
+const permissionsRoutes = Router();
 
-export default permissionsRoutes
+permissionsRoutes.post(
+  "",
+  ensureAuthMiddleware,
+  ensurePermissionMiddleware,
+  validatePermissionCreate(permissionCreateSchema),
+  createPermissionController
+);
+permissionsRoutes.get(
+  "",
+  ensureAuthMiddleware,
+  ensurePermissionMiddleware,
+  listPermissionsController
+);
+permissionsRoutes.delete(
+  "/:id",
+  ensureAuthMiddleware,
+  ensurePermissionMiddleware,
+  deletePermissionController
+);
+permissionsRoutes.patch(
+  "/:id",
+  ensureAuthMiddleware,
+  ensurePermissionMiddleware,
+  updatePermissionController
+);
+
+export default permissionsRoutes;

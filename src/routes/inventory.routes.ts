@@ -13,10 +13,16 @@ import ensurePermissionMiddleware from "../middlewares/ensurePermission.middlewa
 import ensureInventoryQuantityMiddleware from "../middlewares/ensureInventoryQuantity.middleware";
 import listInventoryByProductIdController from "../controllers/inventory/listInventoryByProductId.controller";
 
+import {
+  validateInventoryCreate,
+  inventoryCreateSchema,
+} from "../middlewares/validations/validateInventoryCreate.middleware";
+
 inventoryRoutes.post(
   "",
   ensureAuthMiddleware,
   ensurePermissionMiddleware,
+  validateInventoryCreate(inventoryCreateSchema),
   createInventoryController
 );
 inventoryRoutes.get("/listall", listInventoryController);
