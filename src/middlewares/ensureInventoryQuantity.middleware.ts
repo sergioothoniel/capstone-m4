@@ -15,7 +15,10 @@ const ensureInventoryQuantityMiddleware = async (
     (product.quantity <= 0 || product.quantity < quantity) &&
     type_order === "output"
   ) {
-    throw new AppError("Inventory not have quantity", 400);
+    return res.status(400).json({
+      message: "Inventory not have quantity",
+      itensOnInventory: product.quantity 
+    });
   }
 
   next();

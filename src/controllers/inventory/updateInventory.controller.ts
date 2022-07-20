@@ -7,15 +7,7 @@ const updateInventoryController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const data = req.body;
 
-  if (!id) {
-    throw new AppError("ID not entered");
-  }
-  const type_order = data.type_order;
-  const inventory = await updateInventoryService({
-    id,
-    type_order,
-    data,
-  });
+  const inventory = await updateInventoryService(id, data);
 
   return res
     .status(201)

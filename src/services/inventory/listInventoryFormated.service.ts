@@ -1,26 +1,23 @@
 import { listInventoryRepository } from "../../repositories/inventory";
 
 const listInventoryFormatedService = async (page = 1) => {
-  const inventories = await listInventoryRepository();
-  const inventoriesWithoutPassword = inventories.map((element) => {
-    return { ...element, password: undefined };
-  });
+  const ineventory = await listInventoryRepository();  
 
-  const inventoriesPerPage = 15;
-  const inventoriesQuantity = inventories.length;
-  const pages = Math.ceil(inventoriesQuantity / inventoriesPerPage);
-  const inventoriesToShow = inventoriesWithoutPassword.filter((_, index) => {
-    const lastIndex = page * 15;
-    const firstIndex = lastIndex - 15;
+  const productsPerPage = 25;
+  const inventoryQuantity = ineventory.length;
+  const pages = Math.ceil(inventoryQuantity / productsPerPage);
+  const iproductsToShow = ineventory.filter((_, index) => {
+    const lastIndex = page * productsPerPage;
+    const firstIndex = lastIndex - productsPerPage;
 
     return index >= firstIndex && index < lastIndex;
   });
 
   const requestResult = {
-    itensQuantity: inventoriesToShow,
+    itensQuantity: inventoryQuantity,
     totalPages: pages,
     page,
-    inventories: inventoriesToShow,
+    inventories: iproductsToShow,
   };
 
   return requestResult;
