@@ -8,7 +8,16 @@ import updateCompanyController from "../controllers/companies/updateCompanie.con
 
 import deleteCompanyController from "../controllers/companies/deleteCompanie.controller";
 
-companiesRoutes.post("", createCompanieController);
+import {
+  validateCompanyCreate,
+  companyCreateSchema,
+} from "../middlewares/validations/validateCompanyCreate.middleware";
+
+companiesRoutes.post(
+  "",
+  validateCompanyCreate(companyCreateSchema),
+  createCompanieController
+);
 companiesRoutes.get("", listCompaniesController);
 companiesRoutes.patch("/:id", updateCompanyController);
 companiesRoutes.delete("/:id", deleteCompanyController);

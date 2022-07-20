@@ -11,10 +11,16 @@ import deleteInventoryController from "../controllers/inventory/deleteInventory.
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 import ensurePermissionMiddleware from "../middlewares/ensurePermission.middleware";
 
+import {
+  validateInventoryCreate,
+  inventoryCreateSchema,
+} from "../middlewares/validations/validateInventoryCreate.middleware";
+
 inventoryRoutes.post(
   "",
   ensureAuthMiddleware,
   ensurePermissionMiddleware,
+  validateInventoryCreate(inventoryCreateSchema),
   createInventoryController
 );
 inventoryRoutes.get("", listInventoryController);
