@@ -1,5 +1,3 @@
-import appDataSource from "../../data-source";
-import { Category } from "../../entities/category.entity";
 import { AppError } from "../../errors/appError";
 import { IProductsRequest } from "../../interfaces/products";
 import { categoriesRepository } from "../../repositories/categories";

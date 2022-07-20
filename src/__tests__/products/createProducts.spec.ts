@@ -50,7 +50,7 @@ describe("testing route /products", () => {
       .set("Authorization", token)
       .send(category);
 
-    const categoryId = responseCreateCategory.body.id;
+    const categoryId = responseCreateCategory.body.category.id;
 
     const response = await request(app)
       .post("/products")

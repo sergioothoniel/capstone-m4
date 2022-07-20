@@ -1,16 +1,11 @@
-import appDataSource from "../../data-source";
-import { Product } from "../../entities/product.entity";
 import { AppError } from "../../errors/appError";
 import { IProductsRequest, IProductsResponse } from "../../interfaces/products";
-import { v4 as uuid } from "uuid";
 import {
   productsRepository,
   createUProductsRepository,
   saveProductRepository,
   listProductRepository,
 } from "../../repositories/products";
-import { Category } from "../../entities/category.entity";
-import { User } from "../../entities/user.entity";
 import { listUsersRepository } from "../../repositories/users";
 import { categoriesRepository } from "../../repositories/categories";
 
