@@ -8,7 +8,10 @@ const createCategoryController = async (req: Request, res: Response) => {
 
   const createCategory = await createCategoryService(name)
 
-  return res.status(201).json(createCategory)
+  return res.status(201).json({
+    message: 'Category Created',
+    category: createCategory
+  })
 
 
 }
