@@ -50,7 +50,7 @@ describe("testing route /products", () => {
       .set("Authorization", token)
       .send(category);
 
-    const categoryId = responseCreateCategory.body.id;
+    const categoryId = responseCreateCategory.body.category.id;
 
     const response = await request(app)
       .post("/products")
@@ -63,8 +63,8 @@ describe("testing route /products", () => {
       .set("Authorization", token)
       .send({ name: "Test product" });
 
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("message");
+    expect(responseUpdate.status).toBe(200);
+    expect(responseUpdate.body).toHaveProperty("message");
   });
 
   test("Should throw an error when send a wrong id", async () => {
