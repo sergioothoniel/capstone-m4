@@ -1,22 +1,21 @@
 import { Request, Response, NextFunction } from "express";
 
-import { IProductsRequest } from "../../interfaces/products";
+import { IProductSchema, IProductsRequest } from "../../interfaces/products";
 
 import * as yup from "yup";
 
 import { SchemaOf } from "yup";
 
-export const productCreateSchema: SchemaOf<IProductsRequest> = yup
+export const productCreateSchema: SchemaOf<IProductSchema> = yup
   .object()
   .shape({
     name: yup.string().required(),
     description: yup.string().required(),
     category_id: yup.string().required(),
-    user_id: yup.string().required(),
   });
 
 export const validateProductCreate =
-  (schema: SchemaOf<IProductsRequest>) =>
+  (schema: SchemaOf<IProductSchema>) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = req.body;

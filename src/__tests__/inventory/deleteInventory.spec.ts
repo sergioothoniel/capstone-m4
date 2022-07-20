@@ -4,7 +4,7 @@ import initialSetup from "../../utils/initialSetup";
 import request from "supertest";
 import app from "../../app";
 
-describe("testing route /products", () => {
+describe("Testing route delete inventory", () => {
   let connection: DataSource;
 
   const user = {
@@ -15,8 +15,8 @@ describe("testing route /products", () => {
   const productTest = {
     name: "Celular Kenzie",
     description: "Um celular para estudos da kenzie",
+    category: "eletronico",
   };
-
   beforeAll(async () => {
     await appDataSource
       .initialize()
@@ -31,10 +31,9 @@ describe("testing route /products", () => {
     await connection.destroy();
   });
 
-  test("Should be able to create product", async () => {
+  test("Should be delete inventory with sucess", async () => {
     const responseLogin = await request(app).post("/login").send(user);
     const token = "Bearer " + responseLogin.body.token;
-
     const responseCreatePermission = await request(app)
       .post("/permissions")
       .set("Authorization", token)
@@ -48,50 +47,35 @@ describe("testing route /products", () => {
     const responseCreateCategory = await request(app)
       .post("/categories")
       .set("Authorization", token)
-      .send({category});
+      .send(category);
 
-    const categoryId = responseCreateCategory.body.category.id;
+    const categoryId = responseCreateCategory.body.id;
 
-    const response = await request(app)
+    const responseCreateProduct = await request(app)
       .post("/products")
       .set("Authorization", token)
       .send({ ...productTest, category_id: categoryId });
+
+    const productId = responseCreateProduct.body.newProduct.id;
+
+    const inventory = {
+      product_id: productId,
+      total_value: 10,
+      quantity: 10,
+    };
+
+    const response = await request(app)
+      .post("/inventory")
+      .set("Authorization", token)
+      .send({ ...inventory });
+
+    const inventoryId = responseCreateProduct.body.newProduct.id;
+
+    const responseDelete = await request(app)
+      .delete(`/inventory/${inventoryId}`)
+      .set("Authorization", token);
 
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("message");
-    expect(response.body).toHaveProperty("newProduct");
-    expect(response.body.newProduct).toHaveProperty("id");
-  });
-
-  test("Should throw an error when product is already registred", async () => {
-    const responseLogin = await request(app).post("/login").send(user);
-    const token = "Bearer " + responseLogin.body.token;
-    const responseCreatePermission = await request(app)
-      .post("/permissions")
-      .set("Authorization", token)
-      .send({ name: "permissionTest2" });
-
-    const permissionId = responseCreatePermission.body.newPermission.id;
-
-    const category = {
-      name: "eletronicoo",
-    };
-
-    const responseCreatecategory = await request(app)
-      .post("/categories")
-      .set("Authorization", token)
-      .send(category);
-
-    const categoryId = responseCreatecategory.body.category.id;
-    const response = await request(app)
-      .post("/products")
-      .set("Authorization", token)
-      .send({ ...productTest, category_id: categoryId });
-
-    expect(response.status).toBe(400);
-    expect(response.body).toHaveProperty(
-      "message",
-      "Product already registered"
-    );
   });
 });

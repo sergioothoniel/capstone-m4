@@ -31,7 +31,7 @@ describe("testing route /products", () => {
     await connection.destroy();
   });
 
-  test("Should be able to create product", async () => {
+  test("Should be able to update inventory", async () => {
     const responseLogin = await request(app).post("/login").send(user);
     const token = "Bearer " + responseLogin.body.token;
 
@@ -48,50 +48,48 @@ describe("testing route /products", () => {
     const responseCreateCategory = await request(app)
       .post("/categories")
       .set("Authorization", token)
-      .send({category});
-
-    const categoryId = responseCreateCategory.body.category.id;
-
-    const response = await request(app)
-      .post("/products")
-      .set("Authorization", token)
-      .send({ ...productTest, category_id: categoryId });
-
-    expect(response.status).toBe(201);
-    expect(response.body).toHaveProperty("message");
-    expect(response.body).toHaveProperty("newProduct");
-    expect(response.body.newProduct).toHaveProperty("id");
-  });
-
-  test("Should throw an error when product is already registred", async () => {
-    const responseLogin = await request(app).post("/login").send(user);
-    const token = "Bearer " + responseLogin.body.token;
-    const responseCreatePermission = await request(app)
-      .post("/permissions")
-      .set("Authorization", token)
-      .send({ name: "permissionTest2" });
-
-    const permissionId = responseCreatePermission.body.newPermission.id;
-
-    const category = {
-      name: "eletronicoo",
-    };
-
-    const responseCreatecategory = await request(app)
-      .post("/categories")
-      .set("Authorization", token)
       .send(category);
 
-    const categoryId = responseCreatecategory.body.category.id;
-    const response = await request(app)
+    const categoryId = responseCreateCategory.body.id;
+
+    const responseCreateProduct = await request(app)
       .post("/products")
       .set("Authorization", token)
       .send({ ...productTest, category_id: categoryId });
 
-    expect(response.status).toBe(400);
-    expect(response.body).toHaveProperty(
-      "message",
-      "Product already registered"
-    );
+    const productId = responseCreateProduct.body.newProduct.id;
+
+    const inventory = {
+      product_id: productId,
+      total_value: 10,
+      quantity: 10,
+    };
+
+    const response = await request(app)
+      .post("/inventory")
+      .set("Authorization", token)
+      .send({ ...inventory });
+
+    const inventoryId = response.body.newProduct.id;
+    const responseUpdate = await request(app)
+      .patch(`/inventory/${inventoryId}`)
+      .set("Authorization", token)
+      .send({ quantity: 20 });
+    expect(response.status).toBe(201);
+    expect(response.body).toHaveProperty("message");
+  });
+
+  test("Should throw an error when send a wrong id", async () => {
+    const responseLogin = await request(app).post("/login").send(user);
+
+    const token = "Bearer " + responseLogin.body.token;
+
+    const response = await request(app)
+      .patch("/inventory/123456}")
+      .set("Authorization", token)
+      .send({ name: "updateTestUser" });
+
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty("message");
   });
 });
