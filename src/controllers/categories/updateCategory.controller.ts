@@ -10,7 +10,7 @@ const updateCategoryController = async (req: Request, res: Response) => {
   const updateCategory = await updateCategoryService(id, newName)
   return res.status(200).json({
     message: "Category Updated",
-    newCategoryName: updateCategory
+    category: updateCategory
   })
 
 }
