@@ -39,10 +39,11 @@ describe("POST - /categories", () => {
 
     const responseCreateCategory = await request(app).post('/categories').set("Authorization", token).send(category)
 
+    const response = await request(app).patch(`/categories/${responseCreateCategory.body.category.id}`).set("Authorization", token).send(newCategory)
 
-    const updateCategoryResponse = await request(app).patch(`/categories/${responseCreateCategory.body.category.id}`).set("Authorization", token).send(newCategory)
-
-    expect(updateCategoryResponse.status).toBe(200)
-    expect(updateCategoryResponse.body).toBe(true)
+    expect(response.status).toBe(200)
+    expect(response.body).toHaveProperty("message")
+    expect(response.body).toHaveProperty("category")
+    expect(response.body.category).toHaveProperty("name", newCategory.newName)
   })
 })
