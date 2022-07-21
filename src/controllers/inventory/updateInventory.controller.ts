@@ -10,7 +10,7 @@ const updateInventoryController = async (req: Request, res: Response) => {
   const inventory = await updateInventoryService(id, data);
 
   return res
-    .status(201)
+    .status(200)
     .json({ message: "Inventory updated", inventory: inventory });
 };
 

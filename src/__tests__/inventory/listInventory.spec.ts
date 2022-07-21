@@ -4,7 +4,7 @@ import initialSetup from "../../utils/initialSetup";
 import request from "supertest";
 import app from "../../app";
 
-describe("Testing route list inventory", () => {
+describe("GET /inventory", () => {
   let connection: DataSource;
 
   const user = {
