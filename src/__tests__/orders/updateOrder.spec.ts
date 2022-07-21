@@ -4,7 +4,7 @@ import initialSetup from "../../utils/initialSetup";
 import request from "supertest";
 import app from "../../app";
 
-describe("POST /inventory", () => {
+describe("PATCH /orders", () => {
   let connection: DataSource;
 
   const user = {
@@ -16,7 +16,7 @@ describe("POST /inventory", () => {
     name: "Celular Kenzie",
     description: "Um celular para estudos da kenzie",
   };
-
+  
   beforeAll(async () => {
     await appDataSource
       .initialize()
@@ -31,7 +31,7 @@ describe("POST /inventory", () => {
     await connection.destroy();
   });
 
-  test("Should be able to create an item on inventory", async () => {
+  test("Should be able to disable an order", async () => {
     const responseLogin = await request(app).post("/login").send(user);
     const token = "Bearer " + responseLogin.body.token;
 
@@ -52,24 +52,26 @@ describe("POST /inventory", () => {
 
     const productId = responseCreateProduct.body.newProduct.id;
 
-    const item = {
+    const order = {
       product_id: productId,
-      unitary_value: 10,
-      quantity: 10,
+      type: "input",
+      quantity: 10
     };
 
-    const response = await request(app)
-      .post("/inventory")
+    const responseCretaOrder = await request(app)
+      .post("/orders")
       .set("Authorization", token)
-      .send(item);
+      .send(order); 
 
-    expect(response.status).toBe(201);    
-    expect(response.body).toHaveProperty("id")
-    expect(response.body).toHaveProperty("quantity", item.quantity)
-    expect(response.body).toHaveProperty("unitary_value", item.unitary_value)
-    expect(response.body).toHaveProperty("total_value", item.unitary_value * item.quantity)
-    expect(response.body).toHaveProperty("product")
-    expect(response.body).toHaveProperty("created_at")
+    const orderId = responseCretaOrder.body.newOrder.id
+
+    const response = await request(app)
+    .patch(`/orders/${orderId}`)
+    .set("Authorization", token)   
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("message", "Order disabled");   
     
-  }); 
+  });
+
 });

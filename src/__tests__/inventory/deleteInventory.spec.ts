@@ -4,7 +4,7 @@ import initialSetup from "../../utils/initialSetup";
 import request from "supertest";
 import app from "../../app";
 
-describe("Testing route delete inventory", () => {
+describe("DELETE /inventory", () => {
   let connection: DataSource;
 
   const user = {
@@ -14,9 +14,9 @@ describe("Testing route delete inventory", () => {
 
   const productTest = {
     name: "Celular Kenzie",
-    description: "Um celular para estudos da kenzie",
-    category: "eletronico",
+    description: "Um celular para estudos da kenzie"   
   };
+
   beforeAll(async () => {
     await appDataSource
       .initialize()
@@ -31,16 +31,10 @@ describe("Testing route delete inventory", () => {
     await connection.destroy();
   });
 
-  test("Should be delete inventory with sucess", async () => {
+  test("Should be to delete an item from inventory", async () => {
     const responseLogin = await request(app).post("/login").send(user);
     const token = "Bearer " + responseLogin.body.token;
-    const responseCreatePermission = await request(app)
-      .post("/permissions")
-      .set("Authorization", token)
-      .send({ name: "permissionTest" });
-
-    const permissionId = responseCreatePermission.body.newPermission.id;
-
+   
     const category = {
       name: "eletronico",
     };
@@ -49,7 +43,7 @@ describe("Testing route delete inventory", () => {
       .set("Authorization", token)
       .send(category);
 
-    const categoryId = responseCreateCategory.body.id;
+    const categoryId = responseCreateCategory.body.category.id;
 
     const responseCreateProduct = await request(app)
       .post("/products")
@@ -60,22 +54,22 @@ describe("Testing route delete inventory", () => {
 
     const inventory = {
       product_id: productId,
-      total_value: 10,
+      unitary_value: 10,
       quantity: 10,
     };
 
-    const response = await request(app)
+    const responseCreateItem = await request(app)
       .post("/inventory")
       .set("Authorization", token)
-      .send({ ...inventory });
+      .send(inventory);
 
-    const inventoryId = responseCreateProduct.body.newProduct.id;
+    const inventoryId = responseCreateItem.body.id;
 
     const responseDelete = await request(app)
       .delete(`/inventory/${inventoryId}`)
       .set("Authorization", token);
 
-    expect(response.status).toBe(201);
-    expect(response.body).toHaveProperty("message");
+    expect(responseDelete.status).toBe(200);
+    expect(responseDelete.body).toHaveProperty("message");
   });
 });
